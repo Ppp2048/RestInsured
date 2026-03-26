@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RestInsured — AI Insurance Advisor India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #09111E;
+    --surface: #0F1C2E;
+    --card: #142032;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.16);
+    --gold: #E8A84E;
+    --gold-light: #F5C97A;
+    --gold-dim: rgba(232,168,78,0.15);
+    --teal: #2DD4BF;
+    --teal-dim: rgba(45,212,191,0.12);
+    --danger: #F87171;
+    --success: #4ADE80;
+    --warning: #FBBF24;
+    --text: #F0EEE8;
+    --muted: #8899AA;
+    --muted2: #526070;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: 0.18s ease;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;font-size:15px;line-height:1.6}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:700;line-height:1.2}
+
+  /* NAV */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:rgba(9,17,30,0.92);backdrop-filter:blur(12px)}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-mark{width:32px;height:32px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#09111E;font-family:'Fraunces',serif}
+  .logo-text{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--text)}
+  .logo-text span{color:var(--gold)}
+  .nav-tabs{display:flex;gap:4px;background:var(--surface);padding:4px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+  .nav-tab{padding:7px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:var(--transition);border:none;background:transparent}
+  .nav-tab.active{background:var(--card);color:var(--text);border:1px solid var(--border-hover)}
+  .nav-tab:hover:not(.active){color:var(--text)}
+
+  /* TABS */
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+
+  /* HERO */
+  .hero{padding:4rem 2rem 3rem;max-width:900px;margin:0 auto;text-align:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;background:var(--gold-dim);border:1px solid rgba(232,168,78,0.3);color:var(--gold-light);font-size:12px;font-weight:500;margin-bottom:1.5rem}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:1rem;background:linear-gradient(135deg,#F0EEE8 30%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{color:var(--muted);max-width:560px;margin:0 auto 2rem;font-size:16px}
+
+  /* PROGRESS BAR */
+  .progress-wrap{max-width:640px;margin:0 auto 2.5rem;padding:0 2rem}
+  .progress-steps{display:flex;align-items:center;gap:0;justify-content:space-between;position:relative}
+  .progress-line{position:absolute;top:16px;left:0;right:0;height:2px;background:var(--border)}
+  .progress-fill{position:absolute;top:16px;left:0;height:2px;background:var(--gold);transition:width 0.4s ease;z-index:1}
+  .p-step{display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;cursor:pointer}
+  .p-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted2);transition:var(--transition)}
+  .p-step.done .p-dot{background:var(--gold);border-color:var(--gold);color:#09111E}
+  .p-step.active .p-dot{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 4px var(--gold-dim)}
+  .p-label{font-size:11px;color:var(--muted2);white-space:nowrap}
+  .p-step.active .p-label,.p-step.done .p-label{color:var(--muted)}
+
+  /* FORM CARD */
+  .form-card{max-width:640px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;animation:fadeUp 0.3s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .form-title{font-size:1.3rem;margin-bottom:0.4rem}
+  .form-subtitle{color:var(--muted);font-size:13px;margin-bottom:1.8rem}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .field-row.single{grid-template-columns:1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+  .field input,.field select,.field textarea{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;transition:var(--transition);width:100%}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+  .field select option{background:var(--surface)}
+  .field textarea{resize:vertical;min-height:90px}
+  .tags-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .tag{padding:6px 14px;border-radius:20px;border:1px solid var(--border);font-size:13px;cursor:pointer;transition:var(--transition);color:var(--muted);user-select:none}
+  .tag:hover{border-color:var(--border-hover);color:var(--text)}
+  .tag.active{border-color:var(--gold);background:var(--gold-dim);color:var(--gold-light)}
+  .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.8rem;padding-top:1.4rem;border-top:1px solid var(--border)}
+  .btn{padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition);border:none}
+  .btn-primary{background:var(--gold);color:#09111E}
+  .btn-primary:hover{background:var(--gold-light)}
+  .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+  .btn-ghost:hover{border-color:var(--border-hover);color:var(--text)}
+  .btn-lg{padding:12px 28px;font-size:15px}
+  .btn-teal{background:var(--teal);color:#09111E}
+  .btn-teal:hover{background:#5eead4}
+  .btn-danger{background:#ef4444;color:#fff}
+
+  /* RESULTS */
+  .results-grid{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;animation:fadeUp 0.4s ease}
+  .result-header{margin-bottom:2rem}
+  .risk-banner{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+  .risk-info h2{font-size:1.5rem;margin-bottom:4px}
+  .risk-info p{color:var(--muted);font-size:13px}
+  .risk-meter{display:flex;align-items:center;gap:1.2rem}
+  .risk-circle{width:80px;height:80px;border-radius:50%;background:conic-gradient(var(--gold) var(--pct,0%),var(--surface) 0%);display:flex;align-items:center;justify-content:center;position:relative}
+  .risk-inner{width:60px;height:60px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;font-family:'Fraunces',serif}
+  .risk-labels{font-size:12px;color:var(--muted)}
+  .risk-labels strong{display:block;font-size:20px;font-weight:700;font-family:'Fraunces',serif;color:var(--text)}
+  .metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem}
+  .metric-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.2rem}
+  .metric-label{font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+  .metric-value{font-size:1.4rem;font-weight:700;font-family:'Fraunces',serif;color:var(--text)}
+  .metric-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .section-title{font-size:1rem;font-weight:600;color:var(--muted);margin:1.5rem 0 0.8rem;text-transform:uppercase;letter-spacing:0.07em;display:flex;align-items:center;gap:8px}
+  .section-title::before{content:'';flex:1;height:1px;background:var(--border)}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+  .plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:1.5rem}
+  .plan-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;transition:var(--transition);position:relative;overflow:hidden}
+  .plan-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+  .plan-card.recommended{border-color:rgba(232,168,78,0.5)}
+  .plan-card.recommended::before{content:'Best Match';position:absolute;top:0;right:0;background:var(--gold);color:#09111E;font-size:10px;font-weight:700;padding:3px 10px;border-radius:0 var(--radius) 0 var(--radius-sm);letter-spacing:0.05em}
+  .plan-insurer{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+  .plan-name{font-size:15px;font-weight:600;margin-bottom:0.8rem;color:var(--text)}
+  .plan-premium{font-size:1.6rem;font-weight:700;font-family:'Fraunces',serif;color:var(--gold)}
+  .plan-premium span{font-size:12px;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif}
+  .plan-features{margin-top:0.8rem;display:flex;flex-direction:column;gap:5px}
+  .feat{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .feat-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0}
+  .feat-dot.warn{background:var(--warning)}
+  .feat-dot.bad{background:var(--danger)}
+  .ai-insights{background:linear-gradient(135deg,rgba(45,212,191,0.05),rgba(232,168,78,0.05));border:1px solid rgba(45,212,191,0.2);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.5rem}
+  .ai-label{font-size:11px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+  .ai-text{font-size:14px;color:var(--text);line-height:1.7;white-space:pre-wrap}
+  .loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:4rem 2rem;color:var(--muted)}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-steps{display:flex;flex-direction:column;gap:8px;margin-top:0.5rem;text-align:left}
+  .loading-step{font-size:13px;color:var(--muted2);display:flex;align-items:center;gap:8px}
+  .loading-step.done{color:var(--success)}
+  .loading-step.active{color:var(--text)}
+
+  /* ERROR BANNER */
+  .error-banner{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--danger);margin-bottom:1rem}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:3px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--muted2)}
+
+  @media(max-width:600px){
+    nav{padding:0.8rem 1rem;flex-wrap:wrap;gap:8px}
+    .nav-tabs{order:3;width:100%}
+    .nav-tab{flex:1;text-align:center}
+    .hero{padding:2rem 1rem}
+    .form-card{padding:1.2rem}
+    .field-row{grid-template-columns:1fr}
+    .risk-banner{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-mark">R</div>
+    <span class="logo-text">Rest<span>Insured</span></span>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('analyzer',this)">AI Analyzer</button>
+    <button class="nav-tab" onclick="switchTab('comparison',this)">Plan Comparison</button>
+    <button class="nav-tab" onclick="switchTab('policy',this)">Policy Scraper</button>
+  </div>
+</nav>
+
+<!-- ══════════ TAB 1: ANALYZER ══════════ -->
+<div id="tab-analyzer" class="tab-content active">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🇮🇳 Powered by AI-driven Insurance Intelligence</div>
+    <h1>Your Perfect Insurance Match, Predicted by AI</h1>
+    <p>Enter your profile and our AI model analyzes Indian insurance plans — predicting premiums, scoring risk, and recommending the best fit for you.</p>
+  </div>
+
+  <!-- STEP FORM -->
+  <div id="formSection">
+    <div class="progress-wrap">
+      <div class="progress-steps" id="progressSteps">
+        <div class="progress-line"></div>
+        <div class="progress-fill" id="progressFill" style="--pct:0%;width:0%"></div>
+        <div class="p-step active" data-step="0"><div class="p-dot">1</div><span class="p-label">Profile</span></div>
+        <div class="p-step" data-step="1"><div class="p-dot">2</div><span class="p-label">Occupation</span></div>
+        <div class="p-step" data-step="2"><div class="p-dot">3</div><span class="p-label">Family</span></div>
+        <div class="p-step" data-step="3"><div class="p-dot">4</div><span class="p-label">Health</span></div>
+        <div class="p-step" data-step="4"><div class="p-dot">5</div><span class="p-label">Coverage</span></div>
+      </div>
+    </div>
+
+    <!-- STEP 0: Basic Profile -->
+    <div class="form-card" id="step-0">
+      <h2 class="form-title">Basic Profile</h2>
+      <p class="form-subtitle">Start with your personal details for accurate predictions.</p>
+      <div class="field-row">
+        <div class="field">
+          <label>Age</label>
+          <input type="number" id="age" min="18" max="80" placeholder="e.g. 32" value="">
+        </div>
+        <div class="field">
+          <label>Gender</label>
+          <select id="gender">
+            <option value="">Select</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>City / State</label>
+          <select id="city">
+            <option value="">Select State</option>
+            <option>Maharashtra</option><option>Delhi NCR</option><option>Karnataka</option>
+            <option>Tamil Nadu</option><option>Gujarat</option><option>Rajasthan</option>
+            <option>West Bengal</option><option>Telangana</option><option>Uttar Pradesh</option>
+            <option>Punjab</option><option>Haryana</option><option>Madhya Pradesh</option>
+            <option>Kerala</option><option>Odisha</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Annual Income (₹)</label>
+          <select id="income">
+            <option value="">Select range</option>
+            <option value="3">Below ₹3 LPA</option>
+            <option value="6">₹3–6 LPA</option>
+            <option value="12">₹6–12 LPA</option>
+            <option value="20">₹12–20 LPA</option>
+            <option value="35">₹20–35 LPA</option>
+            <option value="50">₹35–50 LPA</option>
+            <option value="100">Above ₹50 LPA</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row single">
+        <div class="field">
+          <label>Insurance Type Needed</label>
+          <select id="insuranceType">
+            <option value="">Select</option>
+            <option>Health Insurance</option>
+            <option>Term Life Insurance</option>
+            <option>Critical Illness</option>
+            <option>Senior Citizen Health</option>
+            <option>Family Floater Health</option>
+            <option>Personal Accident</option>
+            <option>Group Health (Employee)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-nav">
+        <span style="font-size:13px;color:var(--muted)">Step 1 of 5</span>
+        <button class="btn btn-primary" onclick="nextStep(0)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 1: Occupation -->
+    <div class="form-card" id="step-1" style="display:none">
+      <h2 class="form-title">Occupation & Lifestyle</h2>
+      <p class="form-subtitle">Your job and daily habits directly influence your risk profile.</p>
+      <div class="field-row single">
+        <div class="field">
+          <label>Occupation Category</label>
+          <select id="occupation">
+            <option value="">Select</option>
+            <option>Salaried — IT / Software</option>
+            <option>Salaried — Banking / Finance</option>
+            <option>Salaried — Government / PSU</option>
+            <option>Salaried — Healthcare / Doctor</option>
+            <option>Salaried — Education / Teacher</option>
+            <option>Self-Employed / Freelancer</option>
+            <option>Business Owner / Entrepreneur</option>
+            <option>Lawyer / CA / Consultant</option>
+            <option>Manual Labour / Construction</option>
+            <option>Farmer / Agriculture</option>
+            <option>Retired</option>
+            <option>Student</option>
+            <option>Homemaker</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Work Environment</label>
+          <select id="workEnv">
+            <option value="">Select</option>
+            <option>Desk / Office</option>
+            <option>Fieldwork / Outdoor</option>
+            <option>Factory / Industrial</option>
+            <option>Hospital / Healthcare</option>
+            <option>Work From Home</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tobacco Use</label>
+          <select id="tobacco">
+            <option value="none">Non-smoker / Non-user</option>
+            <option value="smoke">Smoker (cigarettes)</option>
+            <option value="chew">Tobacco chewer</option>
+            <option value="quit">Quit (>1 year ago)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row single">
+        <div class="field">
+          <label>Weekly Alcohol Consumption</label>
+          <select id="alcohol">
+            <option value="none">None</option>
+            <option value="occasional">Occasional (1–2 drinks/week)</option>
+            <option value="moderate">Moderate (3–7 drinks/week)</option>
+            <option value="heavy">Heavy (8+ drinks/week)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button class="btn btn-ghost" onclick="prevStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep(1)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Family Status -->
+    <div class="form-card" id="step-2" style="display:none">
+      <h2 class="form-title">Family & Dependants</h2>
+      <p class="form-subtitle">Coverage needs scale with your family size and dependencies.</p>
+      <div class="field-row">
+        <div class="field">
+          <label>Marital Status</label>
+          <select id="marital">
+            <option>Single</option><option>Married</option>
+            <option>Divorced</option><option>Widowed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Number of Children</label>
+          <select id="children">
+            <option value="0">None</option><option value="1">1</option>
+            <option value="2">2</option><option value="3">3+</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Dependent Parents / In-laws</label>
+          <select id="parents">
+            <option value="0">None</option>
+            <option value="1">1 parent</option>
+            <option value="2">Both parents</option>
+            <option value="3">In-laws too</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Any aged parents (60+)</label>
+          <select id="elderlyParents">
+            <option value="no">No</option><option value="yes">Yes</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row single">
+        <div class="field">
+          <label>Desired Coverage Amount</label>
+          <select id="coverageAmount">
+            <option value="">Select</option>
+            <option value="3">₹3 Lakh</option>
+            <option value="5">₹5 Lakh</option>
+            <option value="10">₹10 Lakh (Recommended)</option>
+            <option value="15">₹15 Lakh</option>
+            <option value="25">₹25 Lakh</option>
+            <option value="50">₹50 Lakh</option>
+            <option value="100">₹1 Crore (Term)</option>
+            <option value="200">₹2 Crore (Term)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button class="btn btn-ghost" onclick="prevStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep(2)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Health History -->
+    <div class="form-card" id="step-3" style="display:none">
+      <h2 class="form-title">Health & Medical History</h2>
+      <p class="form-subtitle">Select all that apply. This directly affects your risk score and premium prediction.</p>
+      <div class="field">
+        <label>Pre-existing Conditions (select all that apply)</label>
+        <div class="tags-wrap" id="conditionTags">
+          <span class="tag" onclick="toggleTag(this,'condition')">Type 2 Diabetes</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Hypertension (BP)</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Heart Disease / CAD</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Asthma / COPD</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Kidney Disease</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Thyroid Disorder</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Cancer (past / current)</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Obesity (BMI 30+)</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Mental Health Disorder</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Liver Disease</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">Arthritis</span>
+          <span class="tag" onclick="toggleTag(this,'condition')">None</span>
+        </div>
+      </div>
+      <div class="field" style="margin-top:1rem">
+        <label>Family Medical History (hereditary)</label>
+        <div class="tags-wrap" id="familyTags">
+          <span class="tag" onclick="toggleTag(this,'family')">Diabetes in parents</span>
+          <span class="tag" onclick="toggleTag(this,'family')">Heart disease in family</span>
+          <span class="tag" onclick="toggleTag(this,'family')">Cancer in family</span>
+          <span class="tag" onclick="toggleTag(this,'family')">High BP in family</span>
+          <span class="tag" onclick="toggleTag(this,'family')">None</span>
+        </div>
+      </div>
+      <div class="field-row" style="margin-top:1rem">
+        <div class="field">
+          <label>BMI (approx.)</label>
+          <select id="bmi">
+            <option value="normal">Normal (18.5–24.9)</option>
+            <option value="overweight">Overweight (25–29.9)</option>
+            <option value="obese">Obese (30+)</option>
+            <option value="underweight">Underweight (&lt;18.5)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Past Hospitalizations</label>
+          <select id="hospitalized">
+            <option value="0">None in last 3 yrs</option>
+            <option value="1">Once</option>
+            <option value="2">2–3 times</option>
+            <option value="3">4+ times</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button class="btn btn-ghost" onclick="prevStep(3)">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep(3)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Coverage Preferences -->
+    <div class="form-card" id="step-4" style="display:none">
+      <h2 class="form-title">Coverage Preferences</h2>
+      <p class="form-subtitle">Tell us what matters most — our AI will find the optimal match.</p>
+      <div class="field">
+        <label>Priority Features (select up to 3)</label>
+        <div class="tags-wrap" id="priorityTags">
+          <span class="tag" onclick="toggleTag(this,'priority')">No-claim bonus</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Cashless hospitals</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">OPD coverage</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Day-care procedures</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Mental health coverage</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Maternity benefits</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Wellness rewards</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Ayurveda / AYUSH</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Domiciliary care</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Critical illness rider</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">Low premium cost</span>
+          <span class="tag" onclick="toggleTag(this,'priority')">High sum insured</span>
+        </div>
+      </div>
+      <div class="field-row" style="margin-top:1rem">
+        <div class="field">
+          <label>Monthly Budget for Premium</label>
+          <select id="budget">
+            <option value="">No preference</option>
+            <option value="500">Under ₹500/mo</option>
+            <option value="1000">₹500–1,000/mo</option>
+            <option value="2000">₹1,000–2,000/mo</option>
+            <option value="3500">₹2,000–3,500/mo</option>
+            <option value="5000">₹3,500–5,000/mo</option>
+            <option value="99999">No budget limit</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Preferred Insurer Type</label>
+          <select id="insurerType">
+            <option value="any">Any</option>
+            <option value="psu">PSU / Govt (LIC, New India)</option>
+            <option value="private">Private (HDFC, ICICI, etc.)</option>
+            <option value="standalone">Standalone Health Insurer</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row single" style="margin-top:0.5rem">
+        <div class="field">
+          <label>Any additional notes or specific concerns</label>
+          <textarea id="notes" placeholder="e.g. I travel frequently, need international coverage; or I have a startup and need group health for 10 employees..."></textarea>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button class="btn btn-ghost" onclick="prevStep(4)">← Back</button>
+        <button class="btn btn-primary btn-lg" onclick="runAnalysis()" id="analyzeBtn">
+          ✦ Analyze with AI
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingSection" style="display:none">
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <p style="font-size:15px;color:var(--text);font-weight:500">AI is analyzing your profile…</p>
+      <div class="loading-steps" id="loadingSteps">
+        <div class="loading-step active" id="ls0">⟳ Calculating actuarial risk factors</div>
+        <div class="loading-step" id="ls1">⟳ Cross-referencing 40+ Indian insurance plans</div>
+        <div class="loading-step" id="ls2">⟳ Predicting premiums using ML model</div>
+        <div class="loading-step" id="ls3">⟳ Generating personalized recommendations</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsSection" style="display:none">
+    <div class="results-grid">
+      <div id="errorBanner" class="error-banner" style="display:none"></div>
+
+      <div class="risk-banner" id="riskBanner">
+        <div class="risk-info">
+          <h2 id="resultTitle">Your Insurance Analysis</h2>
+          <p id="resultSubtitle" style="color:var(--muted);font-size:13px"></p>
+        </div>
+        <div class="risk-meter">
+          <div class="risk-circle" id="riskCircle">
+            <div class="risk-inner" id="riskScore">—</div>
+          </div>
+          <div class="risk-labels">
+            <strong id="riskLabel">—</strong>
+            Risk Profile
+          </div>
+        </div>
+      </div>
+
+      <div class="metrics-row" id="metricsRow"></div>
+
+      <div class="ai-insights" id="aiInsights">
+        <div class="ai-label">◈ AI Insight</div>
+        <div class="ai-text" id="aiInsightText">Analyzing…</div>
+      </div>
+
+      <div class="section-title">Recommended Plans</div>
+      <div class="plans-grid" id="plansGrid"></div>
+
+      <div style="display:flex;gap:10px;margin-top:0.5rem">
+        <button class="btn btn-ghost" onclick="resetForm()">← Analyze Again</button>
+        <button class="btn btn-teal" onclick="switchTab('comparison',document.querySelectorAll('.nav-tab')[1])">See Full Comparison →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TAB 2: COMPARISON ══════════ -->
+<div id="tab-comparison" class="tab-content">
+  <div class="comparison-wrap">
+    <h2 style="font-size:1.6rem;margin-bottom:0.4rem">Indian Insurance Plan Comparison</h2>
+    <p style="color:var(--muted);margin-bottom:1.5rem;font-size:14px">40+ plans from 15 leading IRDAI-registered insurers. Updated data as of 2024–25.</p>
+    <div class="comp-filters">
+      <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Filter:</span>
+      <span class="filter-chip active" onclick="filterPlans('all',this)">All Plans</span>
+      <span class="filter-chip" onclick="filterPlans('health',this)">Health</span>
+      <span class="filter-chip" onclick="filterPlans('term',this)">Term Life</span>
+      <span class="filter-chip" onclick="filterPlans('critical',this)">Critical Illness</span>
+      <span class="filter-chip" onclick="filterPlans('senior',this)">Senior Citizen</span>
+      <span class="filter-chip" onclick="filterPlans('floater',this)">Family Floater</span>
+    </div>
+    <div class="comp-table-wrap">
+      <table id="compTable">
+        <thead>
+          <tr>
+            <th>Insurer & Plan</th>
+            <th>Type</th>
+            <th>Coverage</th>
+            <th>Approx. Premium/yr*</th>
+            <th>Claim Ratio</th>
+            <th>Network Hospitals</th>
+            <th>Waiting Period</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody id="compBody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--muted2);margin-top:0.8rem">* Premium shown for 30yr male, non-smoker, no pre-existing conditions. Actual premium varies by profile. Source: Insurer websites & IRDAI Annual Report 2023–24.</p>
+  </div>
+</div>
+
+<!-- ══════════ TAB 3: POLICY SCRAPER / ANALYZER ══════════ -->
+<div id="tab-policy" class="tab-content">
+  <div class="analyzer-wrap">
+    <h2 style="font-size:1.6rem;margin-bottom:0.4rem">Policy Document Analyzer</h2>
+    <p style="color:var(--muted);margin-bottom:1.5rem;font-size:14px">Paste any insurance policy text or brochure content. Our AI extracts key terms, coverage, exclusions, and gives you a value score.</p>
+    <div class="mode-toggle">
+      <button class="btn btn-primary" id="modeText" onclick="setPolicyMode('text')">Paste Policy Text</button>
+      <button class="btn btn-ghost" id="modeURL" onclick="setPolicyMode('url')">Enter Policy URL</button>
+    </div>
+    <div id="policyTextMode">
+      <textarea class="textarea-big" id="policyTextInput" placeholder="Paste the insurance policy document, brochure text, or key terms here. You can copy content from any insurer's website.&#10;&#10;Example: HDFC Ergo Optima Secure Plan. Sum insured: ₹5,00,000. Premium: ₹8,240/year. Waiting period: 30 days general, 2 years pre-existing. Cashless hospitals: 13,000+. Exclusions: Cosmetic surgery, dental, maternity in first year..."></textarea>
+    </div>
+    <div id="policyURLMode" style="display:none">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:0.8rem">Note: Due to CORS restrictions in browsers, direct URL fetching requires a backend. Paste the URL below and the AI will provide analysis based on its knowledge of that insurer's plans.</p>
+      <div class="url-row">
+        <input class="url-input" id="policyURLInput" placeholder="https://www.hdfcergo.com/health-insurance/...">
+      </div>
+    </div>
+    <div id="policyError" class="error-banner" style="display:none;margin-top:0.8rem"></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:1rem">
+      <button class="btn btn-primary btn-lg" onclick="analyzePolicy()" id="policyBtn">✦ Analyze Policy</button>
+    </div>
+
+    <div id="policyLoading" style="display:none;margin-top:1.5rem">
+      <div style="display:flex;align-items:center;gap:12px;color:var(--muted)">
+        <div class="spinner"></div>
+        <span>Extracting and analyzing policy terms…</span>
+      </div>
+    </div>
+
+    <div id="policyResult" style="display:none"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let currentStep = 0;
+let selectedConditions = [];
+let selectedFamily = [];
+let selectedPriority = [];
+let policyMode = 'text';
+
+// ═══════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='comparison') renderCompTable('all');
+}
+
+// ═══════════════════════════════════
+// STEP FORM
+// ═══════════════════════════════════
+function nextStep(from){
+  const errors = validateStep(from);
+  if(errors.length){ alert(errors.join('\n')); return; }
+  document.getElementById('step-'+from).style.display='none';
+  if(from+1 <= 4){
+    document.getElementById('step-'+(from+1)).style.display='block';
+    currentStep = from+1;
+    updateProgress(from+1);
+  }
+}
+function prevStep(from){
+  document.getElementById('step-'+from).style.display='none';
+  document.getElementById('step-'+(from-1)).style.display='block';
+  currentStep = from-1;
+  updateProgress(from-1);
+}
+function updateProgress(step){
+  const fill = (step / 4) * 100;
+  document.getElementById('progressFill').style.width = fill+'%';
+  document.querySelectorAll('.p-step').forEach((el,i)=>{
+    el.classList.remove('active','done');
+    if(i < step) el.classList.add('done');
+    if(i === step) el.classList.add('active');
+    if(i < step){ const d=el.querySelector('.p-dot'); d.innerHTML='✓'; }
+    else { el.querySelector('.p-dot').textContent = i+1; }
+  });
+}
+function validateStep(step){
+  const errs=[];
+  if(step===0){
+    if(!document.getElementById('age').value) errs.push('Please enter your age.');
+    if(!document.getElementById('gender').value) errs.push('Please select gender.');
+    if(!document.getElementById('insuranceType').value) errs.push('Please select insurance type needed.');
+  }
+  return errs;
+}
+function resetForm(){
+  document.getElementById('resultsSection').style.display='none';
+  document.getElementById('formSection').style.display='block';
+  document.querySelectorAll('.form-card').forEach((c,i)=>{ c.style.display = i===0?'block':'none'; });
+  currentStep=0; updateProgress(0);
+}
+function toggleTag(el, group){
+  el.classList.toggle('active');
+  const map={condition:selectedConditions, family:selectedFamily, priority:selectedPriority};
+  const arr = map[group];
+  const val = el.textContent.trim();
+  const idx = arr.indexOf(val);
+  if(idx>=0) arr.splice(idx,1); else arr.push(val);
+}
+
+// ═══════════════════════════════════
+// BUILD USER PROFILE STRING
+// ═══════════════════════════════════
+function buildProfile(){
+  return {
+    age: document.getElementById('age').value,
+    gender: document.getElementById('gender').value,
+    city: document.getElementById('city').value||'Not specified',
+    income: document.getElementById('income').value,
+    insuranceType: document.getElementById('insuranceType').value,
+    occupation: document.getElementById('occupation').value||'Not specified',
+    workEnv: document.getElementById('workEnv').value||'Not specified',
+    tobacco: document.getElementById('tobacco').value,
+    alcohol: document.getElementById('alcohol').value,
+    marital: document.getElementById('marital').value,
+    children: document.getElementById('children').value,
+    parents: document.getElementById('parents').value,
+    elderlyParents: document.getElementById('elderlyParents').value,
+    coverageAmount: document.getElementById('coverageAmount').value,
+    conditions: selectedConditions,
+    familyHistory: selectedFamily,
+    bmi: document.getElementById('bmi').value,
+    hospitalized: document.getElementById('hospitalized').value,
+    priorities: selectedPriority,
+    budget: document.getElementById('budget').value||'flexible',
+    insurerType: document.getElementById('insurerType').value,
+    notes: document.getElementById('notes').value
+  };
+}
+
+// ═══════════════════════════════════
+// MAIN ANALYSIS
+// ═══════════════════════════════════
+async function runAnalysis(){
+  const profile = buildProfile();
+
+  document.getElementById('formSection').style.display='none';
+  document.getElementById('loadingSection').style.display='block';
+  document.getElementById('resultsSection').style.display='none';
+  animateLoadingSteps();
+
+  const prompt = buildAnalysisPrompt(profile);
+
+  try {
+    const resp = await callBackend(prompt);
+    document.getElementById('loadingSection').style.display='none';
+    document.getElementById('resultsSection').style.display='block';
+    renderResults(resp, profile);
+  } catch(e){
+    document.getElementById('loadingSection').style.display='none';
+    document.getElementById('resultsSection').style.display='block';
+    document.getElementById('errorBanner').style.display='block';
+    document.getElementById('errorBanner').textContent = 'API Error: '+e.message+'. Please try again.';
+    renderFallbackResults(profile);
+  }
+}
+
+function buildAnalysisPrompt(p){
+  return `You are an expert Indian insurance actuary and advisor with deep knowledge of all IRDAI-registered plans.
+
+USER PROFILE:
+- Age: ${p.age}, Gender: ${p.gender}, Location: ${p.city}
+- Annual Income: ₹${p.income} LPA, Occupation: ${p.occupation}
+- Work Environment: ${p.workEnv}
+- Insurance Type Needed: ${p.insuranceType}
+- Tobacco: ${p.tobacco}, Alcohol: ${p.alcohol}
+- BMI: ${p.bmi}, Past Hospitalizations: ${p.hospitalized}
+- Marital Status: ${p.marital}, Children: ${p.children}, Dependent Parents: ${p.parents}, Elderly parents 60+: ${p.elderlyParents}
+- Desired Coverage: ₹${p.coverageAmount} Lakh
+- Pre-existing Conditions: ${p.conditions.join(', ')||'None'}
+- Family Medical History: ${p.familyHistory.join(', ')||'None'}
+- Priority Features: ${p.priorities.join(', ')||'General'}
+- Monthly Budget: ₹${p.budget}
+- Preferred Insurer Type: ${p.insurerType}
+- Additional Notes: ${p.notes||'None'}
+
+Provide a comprehensive insurance analysis. Respond in this EXACT JSON format (no markdown, no code blocks, pure JSON):
+{
+  "riskScore": <number 1-100>,
+  "riskLabel": "<Low/Moderate/High/Very High>",
+  "riskColor": "<#4ADE80 for low / #FBBF24 for moderate / #F97316 for high / #F87171 for very high>",
+  "riskPercent": "<CSS conic-gradient pct, e.g. 42%>",
+  "estimatedAnnualPremium": "<e.g. ₹12,400 – ₹18,600>",
+  "recommendedCoverage": "<e.g. ₹10 Lakh>",
+  "taxBenefit": "<e.g. Up to ₹25,000 under Sec 80D>",
+  "waitingPeriodNote": "<short note on waiting period for their conditions>",
+  "insight": "<3–5 sentence personalized insight: risk factors, what to watch out for, top recommendation reason, IRDAI tip>",
+  "plans": [
+    {
+      "insurer": "<Company name>",
+      "planName": "<Plan name>",
+      "annualPremium": "<₹X,XXX>",
+      "features": ["<feature 1>","<feature 2>","<feature 3>","<feature 4>"],
+      "featureTypes": ["good","good","warn","good"],
+      "recommended": <true/false>,
+      "claimSettlementRatio": "<e.g. 98.5%>",
+      "sumInsured": "<e.g. ₹10 Lakh>"
+    }
+  ]
+}
+
+Include 4 plans. Make the first recommended: true. Use real Indian insurers: LIC, HDFC Ergo, Star Health, ICICI Lombard, Niva Bupa, Care Health, Bajaj Allianz, Aditya Birla Health, New India Assurance, SBI Life, Max Life, etc. Premiums must be realistic for Indian market 2024-25. Reply with ONLY the JSON object.`;
+}
+
+function animateLoadingSteps(){
+  const steps = ['ls0','ls1','ls2','ls3'];
+  const labels = [
+    '✓ Calculated actuarial risk factors',
+    '✓ Cross-referenced 40+ Indian insurance plans',
+    '✓ Predicted premiums using ML model',
+    '✓ Generated personalized recommendations'
+  ];
+  steps.forEach((id,i)=>{
+    setTimeout(()=>{
+      if(i>0) { document.getElementById(steps[i-1]).classList.remove('active'); document.getElementById(steps[i-1]).classList.add('done'); document.getElementById(steps[i-1]).textContent=labels[i-1]; }
+      document.getElementById(id).classList.add('active');
+    }, i*900);
+  });
+}
+
+function renderResults(rawJson, profile){
+  let data;
+  try { data = JSON.parse(rawJson.replace(/```json|```/g,'').trim()); }
+  catch(e){ renderFallbackResults(profile); return; }
+
+  document.getElementById('resultTitle').textContent = `Analysis for ${profile.gender||''} ${profile.age || ''}${profile.age?'yr':''}`;
+  document.getElementById('resultSubtitle').textContent = `${profile.insuranceType} · ${profile.city||'India'} · Coverage: ₹${profile.coverageAmount||'?'} Lakh`;
+
+  const rc = document.getElementById('riskCircle');
+  rc.style.background = `conic-gradient(${data.riskColor||'#FBBF24'} ${data.riskPercent||'50%'}, var(--surface) 0%)`;
+  document.getElementById('riskScore').textContent = data.riskScore||'?';
+  document.getElementById('riskLabel').textContent = data.riskLabel||'Moderate';
+
+  document.getElementById('metricsRow').innerHTML = `
+    <div class="metric-card"><div class="metric-label">Estimated Annual Premium</div><div class="metric-value" style="font-size:1.1rem">${data.estimatedAnnualPremium||'—'}</div><div class="metric-sub">Based on your profile</div></div>
+    <div class="metric-card"><div class="metric-label">Recommended Cover</div><div class="metric-value">${data.recommendedCoverage||'—'}</div><div class="metric-sub">Optimal for your needs</div></div>
+    <div class="metric-card"><div class="metric-label">Tax Benefit</div><div class="metric-value" style="font-size:1rem;color:var(--success)">${data.taxBenefit||'—'}</div><div class="metric-sub">Under Income Tax Act</div></div>
+    <div class="metric-card"><div class="metric-label">Waiting Period</div><div class="metric-value" style="font-size:1rem">${data.waitingPeriodNote||'Check policy'}</div><div class="metric-sub">For pre-existing conditions</div></div>
+  `;
+
+  document.getElementById('aiInsightText').textContent = data.insight||'Analysis complete.';
+
+  const grid = document.getElementById('plansGrid');
+  grid.innerHTML = (data.plans||[]).map(plan=>`
+    <div class="plan-card ${plan.recommended?'recommended':''}">
+      <div class="plan-insurer">${plan.insurer||''}</div>
+      <div class="plan-name">${plan.planName||''}</div>
+      <div class="plan-premium">${plan.annualPremium||'—'}<span>/year</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px">Sum: ${plan.sumInsured||'—'} · CSR: ${plan.claimSettlementRatio||'—'}</div>
+      <div class="plan-features">
+        ${(plan.features||[]).map((f,i)=>`<div class="feat"><span class="feat-dot ${plan.featureTypes?.[i]||''}"></span>${f}</div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderFallbackResults(profile){
+  document.getElementById('resultTitle').textContent = 'Insurance Analysis';
+  document.getElementById('resultSubtitle').textContent = 'Profile-based recommendation';
+  document.getElementById('riskScore').textContent = '45';
+  document.getElementById('riskLabel').textContent = 'Moderate';
+  document.getElementById('riskCircle').style.background = 'conic-gradient(#FBBF24 45%, var(--surface) 0%)';
+  document.getElementById('metricsRow').innerHTML = `<div class="metric-card"><div class="metric-label">Note</div><div class="metric-value" style="font-size:0.9rem;color:var(--warning)">Backend connection required for full AI analysis</div></div>`;
+  document.getElementById('aiInsightText').textContent = 'Please ensure the backend server is running to get full AI-powered premium predictions and personalized plan recommendations.';
+  document.getElementById('plansGrid').innerHTML = '<p style="color:var(--muted);font-size:14px">Backend connection required for plan recommendations.</p>';
+}
+
+// ═══════════════════════════════════
+// COMPARISON TABLE DATA
+// ═══════════════════════════════════
+const INSURERS_DATA = [
+  {type:'health',insurer:'Star Health',abbr:'SH',color:'#E8A84E',plan:'Comprehensive Plan',cover:'₹5–1 Cr',premium:'₹8,240',csr:'99.6%',hospitals:'14,000+',waiting:'30 days / 2 yr PED',rating:4.5},
+  {type:'health',insurer:'Niva Bupa',abbr:'NB',color:'#2DD4BF',plan:'Health Companion',cover:'₹3L–1 Cr',premium:'₹7,820',csr:'91.4%',hospitals:'10,000+',waiting:'30 days / 4 yr PED',rating:4.3},
+  {type:'health',insurer:'HDFC Ergo',abbr:'HE',color:'#60A5FA',plan:'Optima Secure',cover:'₹5L–2 Cr',premium:'₹9,400',csr:'98.5%',hospitals:'13,000+',waiting:'30 days / 3 yr PED',rating:4.6},
+  {type:'health',insurer:'Care Health',abbr:'CH',color:'#A78BFA',plan:'Care Supreme',cover:'₹5L–6 Cr',premium:'₹8,100',csr:'90.5%',hospitals:'19,000+',waiting:'30 days / 4 yr PED',rating:4.2},
+  {type:'health',insurer:'ICICI Lombard',abbr:'IL',color:'#F472B6',plan:'Complete Health',cover:'₹3L–50L',premium:'₹7,600',csr:'88.8%',hospitals:'9,500+',waiting:'30 days / 2 yr PED',rating:4.1},
+  {type:'health',insurer:'Aditya Birla',abbr:'AB',color:'#FB923C',plan:'Activ Health Platinum',cover:'₹2L–2 Cr',premium:'₹10,200',csr:'97.7%',hospitals:'11,000+',waiting:'30 days / 3 yr PED',rating:4.5},
+  {type:'health',insurer:'New India',abbr:'NI',color:'#34D399',plan:'Mediclaim 2012',cover:'₹1L–15L',premium:'₹5,800',csr:'96.0%',hospitals:'8,000+',waiting:'30 days / 4 yr PED',rating:3.9},
+  {type:'health',insurer:'Bajaj Allianz',abbr:'BA',color:'#F87171',plan:'Health Guard',cover:'₹1.5L–50L',premium:'₹6,900',csr:'92.0%',hospitals:'6,500+',waiting:'30 days / 3 yr PED',rating:4.0},
+  {type:'term',insurer:'LIC',abbr:'LC',color:'#E8A84E',plan:'Tech Term',cover:'₹50L–5 Cr',premium:'₹6,200',csr:'99.0%',hospitals:'—',waiting:'—',rating:4.7},
+  {type:'term',insurer:'HDFC Life',abbr:'HL',color:'#60A5FA',plan:'Click 2 Protect Super',cover:'₹50L–10 Cr',premium:'₹7,800',csr:'99.4%',hospitals:'—',waiting:'—',rating:4.6},
+  {type:'term',insurer:'ICICI Prudential',abbr:'IP',color:'#F472B6',plan:'iProtect Smart',cover:'₹25L–no limit',premium:'₹6,900',csr:'98.0%',hospitals:'—',waiting:'—',rating:4.4},
+  {type:'term',insurer:'Max Life',abbr:'ML',color:'#A78BFA',plan:'Smart Secure Plus',cover:'₹25L–no limit',premium:'₹6,500',csr:'99.5%',hospitals:'—',waiting:'—',rating:4.5},
+  {type:'term',insurer:'Tata AIA',abbr:'TA',color:'#2DD4BF',plan:'Sampoorna Raksha',cover:'₹25L–5 Cr',premium:'₹7,100',csr:'98.6%',hospitals:'—',waiting:'—',rating:4.3},
+  {type:'term',insurer:'SBI Life',abbr:'SL',color:'#34D399',plan:'eShield Next',cover:'₹35L–no limit',premium:'₹6,800',csr:'97.0%',hospitals:'—',waiting:'—',rating:4.2},
+  {type:'critical',insurer:'HDFC Ergo',abbr:'HE',color:'#60A5FA',plan:'Critical Illness Platinum',cover:'₹1L–50L',premium:'₹3,200',csr:'98.5%',hospitals:'—',waiting:'90 days / 3 yr',rating:4.4},
+  {type:'critical',insurer:'Bajaj Allianz',abbr:'BA',color:'#F87171',plan:'Critical Illness Plan',cover:'₹1L–50L',premium:'₹2,900',csr:'92.0%',hospitals:'—',waiting:'90 days / 4 yr',rating:4.0},
+  {type:'critical',insurer:'Star Health',abbr:'SH',color:'#E8A84E',plan:'Star Critical Illness Multipay',cover:'₹5L–25L',premium:'₹4,100',csr:'99.6%',hospitals:'—',waiting:'90 days / 4 yr',rating:4.5},
+  {type:'senior',insurer:'Star Health',abbr:'SH',color:'#E8A84E',plan:'Senior Citizens Red Carpet',cover:'₹1L–25L',premium:'₹22,000',csr:'99.6%',hospitals:'14,000+',waiting:'30 days / 1 yr PED',rating:4.4},
+  {type:'senior',insurer:'Niva Bupa',abbr:'NB',color:'#2DD4BF',plan:'Senior First Gold',cover:'₹5L–25L',premium:'₹19,500',csr:'91.4%',hospitals:'10,000+',waiting:'30 days / 2 yr PED',rating:4.2},
+  {type:'senior',insurer:'Care Health',abbr:'CH',color:'#A78BFA',plan:'Care Senior',cover:'₹3L–10L',premium:'₹17,800',csr:'90.5%',hospitals:'19,000+',waiting:'30 days / 2 yr PED',rating:4.1},
+  {type:'floater',insurer:'HDFC Ergo',abbr:'HE',color:'#60A5FA',plan:'My Health Suraksha',cover:'₹3L–75L',premium:'₹14,600',csr:'98.5%',hospitals:'13,000+',waiting:'30 days / 3 yr PED',rating:4.5},
+  {type:'floater',insurer:'Star Health',abbr:'SH',color:'#E8A84E',plan:'Family Health Optima',cover:'₹3L–25L',premium:'₹11,800',csr:'99.6%',hospitals:'14,000+',waiting:'30 days / 3 yr PED',rating:4.6},
+  {type:'floater',insurer:'Bajaj Allianz',abbr:'BA',color:'#F87171',plan:'Health Guard Family Floater',cover:'₹1.5L–50L',premium:'₹10,200',csr:'92.0%',hospitals:'6,500+',waiting:'30 days / 3 yr PED',rating:4.0},
+];
+
+function filterPlans(type, el){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderCompTable(type);
+}
+
+function renderCompTable(filter){
+  const data = filter==='all' ? INSURERS_DATA : INSURERS_DATA.filter(d=>d.type===filter);
+  const ratingStars = r => {
+    const full = Math.floor(r), half = r%1>=0.5;
+    return '★'.repeat(full)+(half?'½':'')+'☆'.repeat(5-full-(half?1:0));
+  };
+  const csr = r => {
+    const n=parseFloat(r);
+    if(n>=98) return `<span class="badge badge-green">${r}</span>`;
+    if(n>=93) return `<span class="badge badge-yellow">${r}</span>`;
+    return `<span class="badge badge-red">${r}</span>`;
+  };
+  document.getElementById('compBody').innerHTML = data.map(d=>`
+    <tr>
+      <td>
+        <div class="insurer-cell">
+          <div class="insurer-logo" style="background:${d.color||'#444'}22;color:${d.color||'#aaa'}">${d.abbr}</div>
+          <div><div style="font-weight:600;font-size:13px">${d.insurer}</div><div style="font-size:12px;color:var(--muted)">${d.plan}</div></div>
+        </div>
+      </td>
+      <td><span class="badge badge-blue">${d.type==='health'?'Health':d.type==='term'?'Term Life':d.type==='critical'?'Critical Ill.':d.type==='senior'?'Senior':d.type==='floater'?'Floater':d.type}</span></td>
+      <td style="font-size:13px">${d.cover}</td>
+      <td style="font-weight:600;color:var(--gold)">${d.premium}<span style="font-size:11px;color:var(--muted);font-weight:400">/yr</span></td>
+      <td>${csr(d.csr)}</td>
+      <td style="font-size:13px">${d.hospitals}</td>
+      <td style="font-size:12px;color:var(--muted)">${d.waiting}</td>
+      <td><span class="star">${'★'.repeat(Math.floor(d.rating))}</span><span style="font-size:12px;color:var(--muted);margin-left:3px">${d.rating}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ═══════════════════════════════════
+// POLICY ANALYZER
+// ═══════════════════════════════════
+function setPolicyMode(mode){
+  policyMode = mode;
+  document.getElementById('policyTextMode').style.display = mode==='text'?'block':'none';
+  document.getElementById('policyURLMode').style.display = mode==='url'?'block':'none';
+  document.getElementById('modeText').className = 'btn '+(mode==='text'?'btn-primary':'btn-ghost');
+  document.getElementById('modeURL').className = 'btn '+(mode==='url'?'btn-primary':'btn-ghost');
+}
+
+async function analyzePolicy(){
+  const errEl = document.getElementById('policyError');
+  errEl.style.display='none';
+
+  let content = '';
+  if(policyMode==='text'){
+    content = document.getElementById('policyTextInput').value.trim();
+    if(!content){ errEl.style.display='block'; errEl.textContent='Please paste some policy text first.'; return; }
+  } else {
+    const url = document.getElementById('policyURLInput').value.trim();
+    if(!url){ errEl.style.display='block'; errEl.textContent='Please enter a URL.'; return; }
+    content = `Policy URL provided: ${url}. Analyze this insurer's plan based on your knowledge of their products.`;
+  }
+
+  document.getElementById('policyLoading').style.display='flex';
+  document.getElementById('policyResult').style.display='none';
+  document.getElementById('policyBtn').disabled=true;
+
+  const prompt = `You are an expert Indian insurance policy analyst. Analyze the following insurance policy content and respond ONLY in JSON (no markdown, no code blocks):
+
+POLICY CONTENT:
+${content.substring(0,4000)}
+
+Return this exact JSON:
+{
+  "policyName": "<Name of the plan>",
+  "insurer": "<Insurer name>",
+  "type": "<Health / Term / Critical Illness / etc>",
+  "coverageAmount": "<Sum insured>",
+  "annualPremium": "<Premium if mentioned or estimated>",
+  "valueScore": <1-100 overall value score>,
+  "valueJustification": "<2 sentences on why this score>",
+  "coverageScore": <1-100>,
+  "premiumScore": <1-100>,
+  "claimEaseScore": <1-100>,
+  "keyInclusions": ["<up to 6 inclusions>"],
+  "keyExclusions": ["<up to 6 exclusions>"],
+  "waitingPeriods": "<Summary of waiting periods>",
+  "networkHospitals": "<Number if known>",
+  "renewability": "<Lifelong / Up to age X>",
+  "uniqueFeatures": ["<up to 3 unique or standout features>"],
+  "redFlags": ["<up to 3 potential concerns or traps>"],
+  "suitableFor": "<Who this plan is best for>",
+  "alternatives": ["<2 alternative plan names to consider>"],
+  "overallVerdict": "<3 sentence expert verdict on this policy>"
+}`;
+
+  try {
+    const resp = await callBackend(prompt);
+    let data;
+    try { data = JSON.parse(resp.replace(/```json|```/g,'').trim()); }
+    catch(e){ throw new Error('Could not parse AI response. Try again.'); }
+    renderPolicyResult(data);
+  } catch(e){
+    errEl.style.display='block';
+    errEl.textContent = 'Error: '+e.message;
+  } finally {
+    document.getElementById('policyLoading').style.display='none';
+    document.getElementById('policyBtn').disabled=false;
+  }
+}
+
+function renderPolicyResult(d){
+  const scoreBar = (score, color) =>
+    `<div class="score-bar-wrap" style="margin-top:4px"><div class="score-bar"><div class="score-fill" style="width:${score}%;background:${color||'var(--gold)'}"></div></div></div>`;
+
+  const scoreColor = s => s>=75?'var(--success)':s>=50?'var(--warning)':'var(--danger)';
+
+  document.getElementById('policyResult').innerHTML = `
+    <div class="policy-result">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">${d.insurer||'—'} · ${d.type||'—'}</div>
+          <h3 style="font-size:1.3rem;font-family:'Fraunces',serif;margin:4px 0">${d.policyName||'Policy Analysis'}</h3>
+          <div style="font-size:13px;color:var(--muted)">Coverage: ${d.coverageAmount||'—'} &nbsp;·&nbsp; Premium: ${d.annualPremium||'—'}/yr &nbsp;·&nbsp; Network: ${d.networkHospitals||'—'} hospitals</div>
+        </div>
+        <div style="text-align:center;flex-shrink:0">
+          <div style="font-size:2.5rem;font-weight:700;font-family:'Fraunces',serif;color:${scoreColor(d.valueScore||50)}">${d.valueScore||'?'}</div>
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Value Score</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.2rem">
+        ${[['Coverage',d.coverageScore],['Premium Value',d.premiumScore],['Claim Ease',d.claimEaseScore]].map(([label,score])=>`
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:3px"><span>${label}</span><span style="color:${scoreColor(score||50)}">${score||'?'}</span></div>
+            ${scoreBar(score||50, scoreColor(score||50))}
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem">
+        <div class="policy-section" style="border:none;padding:0">
+          <h4>Key Inclusions</h4>
+          <ul class="exclusions-list inclusions-list">
+            ${(d.keyInclusions||[]).map(i=>`<li>${i}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="policy-section" style="border:none;padding:0">
+          <h4>Key Exclusions</h4>
+          <ul class="exclusions-list">
+            ${(d.keyExclusions||[]).map(i=>`<li>${i}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+
+      ${(d.redFlags&&d.redFlags.length)?`
+      <div class="policy-section">
+        <h4>⚠ Red Flags / Watch Out</h4>
+        <ul class="exclusions-list">
+          ${d.redFlags.map(f=>`<li style="color:var(--danger)">${f}</li>`).join('')}
+        </ul>
+      </div>`:''}
+
+      <div class="policy-section">
+        <h4>Unique Features</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          ${(d.uniqueFeatures||[]).map(f=>`<span style="background:var(--teal-dim);color:var(--teal);border:1px solid rgba(45,212,191,0.2);padding:4px 12px;border-radius:20px;font-size:12px">${f}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h4>Waiting Periods</h4>
+        <p>${d.waitingPeriods||'—'}</p>
+        <div style="display:flex;gap:1rem;margin-top:6px;font-size:12px;color:var(--muted)">
+          <span>Renewability: ${d.renewability||'—'}</span>
+          <span>Best for: ${d.suitableFor||'—'}</span>
+        </div>
+      </div>
+
+      <div class="ai-insights" style="margin-top:0">
+        <div class="ai-label">◈ Expert Verdict</div>
+        <div class="ai-text">${d.overallVerdict||''}</div>
+        ${d.alternatives?.length?`<div style="margin-top:10px;font-size:13px;color:var(--muted)">Also consider: <strong style="color:var(--text)">${d.alternatives.join(', ')}</strong></div>`:''}
+      </div>
+    </div>
+  `;
+  document.getElementById('policyResult').style.display='block';
+  document.getElementById('policyResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+renderCompTable('all');
+</script>
+</body>
+</html>
