@@ -14,8 +14,9 @@
 <!-- NAV -->
 <nav>
   <a class="logo" href="#">
-    <div class="logo-mark">R</div>
+    <div class="logo-mark">R+</div>
     <span class="logo-text">RestInsured</span>
+  </a>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('analyzer',this)">AI Analyzer</button>
     <button class="nav-tab" onclick="switchTab('comparison',this)">Compare</button>
@@ -31,9 +32,14 @@
 <div id="tab-analyzer" class="tab-content active">
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">✦ Actuarial Intelligence Platform</div>
-    <h1>Predict your perfect<br>insurance match.</h1>
-    <p>Analyze 40+ Indian insurance plans. Our ML model predicts premiums, scores risk, and recommends the best fit using actuarial data.</p>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Actuarial Intelligence Platform</div>
+      <h1>Predict your perfect<br>insurance match.</h1>
+      <p>Analyze 40+ Indian insurance plans. Our ML model predicts premiums, scores risk, and recommends the best fit using actuarial data.</p>
+    </div>
+    <div class="hero-asset-container">
+      <img src="assets/shield.png" class="hero-asset" alt="3D Insurance Security Asset">
+    </div>
   </div>
 
   <!-- STEP FORM -->
@@ -394,9 +400,14 @@
 <!-- ══════════ TAB 2: COMPARISON ══════════ -->
 <div id="tab-comparison" class="tab-content">
   <div class="comparison-wrap">
-    <div style="margin-bottom:2rem">
-      <h2 style="font-size:2.2rem;margin-bottom:0.8rem;color:var(--primary)">Insurer Plan Matrix</h2>
-      <p style="color:var(--muted);font-size:16px;max-width:600px">Cross-sectional analysis of 40+ IRDAI-registered plans indexed with network density and claim ratios for 2024-25.</p>
+    <div class="hero">
+      <div class="hero-content">
+        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Plan Comparison Matrix</h2>
+        <p style="color:var(--muted);font-size:16px;max-width:600px">Cross-sectional analysis of 40+ IRDAI-registered plans indexed with network density and claim ratios for 2024-25.</p>
+      </div>
+      <div class="hero-asset-container" style="width:240px;height:240px;">
+        <img src="assets/compare.png" class="hero-asset" alt="3D Comparison Data Asset">
+      </div>
     </div>
     
     <div class="comp-filters">
@@ -433,9 +444,14 @@
 <!-- ══════════ TAB 3: POLICY SCRAPER / ANALYZER ══════════ -->
 <div id="tab-policy" class="tab-content">
   <div class="analyzer-wrap">
-    <div style="margin-bottom:2rem">
-      <h2 style="font-size:2.2rem;margin-bottom:0.8rem;color:var(--primary)">Policy Deconstructor</h2>
-      <p style="color:var(--muted);font-size:16px;max-width:600px">Paste policy verbiage or URL constraints. Our NLP engine will dismantle clauses to detect exclusions, waiting periods, and score intrinsic value.</p>
+    <div class="hero">
+      <div class="hero-content">
+        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Policy Deconstructor</h2>
+        <p style="color:var(--muted);font-size:16px;max-width:600px">Paste policy verbiage or URL constraints. Our NLP engine will dismantle clauses to detect exclusions, waiting periods, and score intrinsic value.</p>
+      </div>
+      <div class="hero-asset-container" style="width:240px;height:240px;">
+        <img src="assets/document.png" class="hero-asset" alt="3D Policy Analysis Asset">
+      </div>
     </div>
 
     <div class="mode-toggle">
@@ -473,9 +489,14 @@
 <!-- ══════════ TAB 4: ML DASHBOARD ══════════ -->
 <div id="tab-calculators" class="tab-content">
   <div class="analyzer-wrap">
-    <div style="margin-bottom:2rem">
-      <h2 style="font-size:2.2rem;margin-bottom:0.8rem;color:var(--primary)">Interactive ML Dashboard</h2>
-      <p style="color:var(--muted);font-size:16px;max-width:600px">Experience instant, native actuarial predictions, ultra-fast 3D claim tracking and drag-and-drop bundle customization powered by GSAP.</p>
+    <div class="hero">
+      <div class="hero-content">
+        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Interactive ML Dashboard</h2>
+        <p style="color:var(--muted);font-size:16px;max-width:600px">Experience instant, native actuarial predictions, ultra-fast 3D claim tracking and drag-and-drop bundle customization powered by GSAP.</p>
+      </div>
+      <div class="hero-asset-container" style="width:240px;height:240px;">
+        <img src="assets/ml.png" class="hero-asset" alt="3D Neural Network ML Asset">
+      </div>
     </div>
 
     <div class="grid-layout" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));gap:2rem;">
