@@ -26,7 +26,14 @@ class RestInsuredAPI {
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
 
-            return await response.json();
+            const data = await response.json();
+            
+            // Check for application-level errors
+            if (data.success === false) {
+                throw new Error(data.message || 'Backend operation failed');
+            }
+            
+            return data;
         } catch (error) {
             console.error('API Request Error:', error);
             throw error;
@@ -75,7 +82,14 @@ const api = new RestInsuredAPI();
 async function callBackend(prompt) {
     try {
         const response = await api.analyzeInsurance(prompt);
-        return response.data;
+        // Extract the actual JSON string from the Gemini response structure
+        if (response.data && response.data.content && response.data.content.length > 0) {
+            return response.data.content[0].text;
+        }
+        if (typeof response.data === 'string') {
+            return response.data;
+        }
+        return JSON.stringify(response.data);
     } catch (error) {
         console.error('Backend call failed:', error);
         throw error;

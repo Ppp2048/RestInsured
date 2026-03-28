@@ -575,3 +575,143 @@ function renderPolicyResult(d){
 // INIT
 // ═══════════════════════════════════
 renderCompTable('all');
+
+// ═══════════════════════════════════
+// GSAP INTERACTIVE MODULES
+// ═══════════════════════════════════
+
+// Trigger scripts on DOM content load
+document.addEventListener('DOMContentLoaded', () => {
+
+// 1. Quote Calculator Sync
+const covSlider = document.getElementById('gsapCoverage');
+const dedSlider = document.getElementById('gsapDeductible');
+const covValDisplay = document.getElementById('covVal');
+const dedValDisplay = document.getElementById('dedVal');
+const premDisplay = document.getElementById('gsapPremium');
+const covBar = document.getElementById('gsapCovBar');
+
+function updateGSAPQuote() {
+   if(!covSlider) return;
+   let cov = parseInt(covSlider.value);
+   let ded = parseInt(dedSlider.value);
+   covValDisplay.textContent = new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(cov);
+   dedValDisplay.textContent = new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(ded);
+   
+   let prem = (cov * 0.0018) - (ded * 0.05);
+   if(prem < 1000) prem = 1000;
+   
+   let currentPrem = parseInt(premDisplay.textContent.replace(/\D/g,'')) || 0;
+   gsap.to({val: currentPrem}, {
+     val: prem,
+     duration: 0.8,
+     ease: "power2.out",
+     onUpdate: function() {
+       premDisplay.textContent = new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Math.round(this.targets()[0].val));
+     }
+   });
+
+   let pct = (cov / 10000000) * 100;
+   gsap.to(covBar, { width: pct + '%', duration: 0.5, ease: "power2.out" });
+}
+
+if(covSlider){
+  covSlider.addEventListener('input', updateGSAPQuote);
+  dedSlider.addEventListener('input', updateGSAPQuote);
+  updateGSAPQuote();
+}
+
+// 2. 3D Policy Customizer
+if(document.querySelector('.drag-icon') && typeof Draggable !== 'undefined') {
+  gsap.fromTo(".drag-icon", {scale:0, opacity:0, rotationY:90, z:-100}, {scale:1, opacity:1, rotationY:0, z:0, duration:1, stagger:0.15, ease:"back.out(1.5)", delay: 0.5});
+  Draggable.create(".drag-icon", {
+     bounds: "#tab-calculators",
+     onDragStart: function() {
+       gsap.to(this.target, { scale: 1.15, rotation: 10, cursor: 'grabbing', duration: 0.2 });
+     },
+     onRelease: function() {
+       gsap.to(this.target, { scale: 1, rotation: 0, cursor: 'grab', duration: 0.2 });
+       if(this.hitTest("#bundleZone", "50%")) {
+          gsap.to(this.target, { scale: 0, opacity: 0, duration: 0.3 });
+          let zone = document.getElementById('bundleZone');
+          zone.style.borderColor = "var(--success)";
+          zone.style.background = "rgba(16,185,129,0.1)";
+          document.getElementById('bundleMsg').style.display = "block";
+       }
+     }
+  });
+}
+
+// 3. Claims Stepper
+window.currentGSAPStep = 0;
+window.advanceStepper = function() {
+   const nodes = document.querySelectorAll('.step-fillable');
+   if(!nodes.length) return;
+   const max = nodes.length - 1;
+   if(window.currentGSAPStep < max) {
+      window.currentGSAPStep++;
+      let pct = (window.currentGSAPStep / max) * 100;
+      gsap.to('#stepperFill', { width: pct + '%', duration: 0.6, ease: "back.out(1.2)" });
+      
+      const n = nodes[window.currentGSAPStep];
+      n.classList.remove('inactive');
+      n.classList.add('active');
+      n.style.opacity = 1;
+      
+      let circle = n.querySelector('.step-circle');
+      circle.style.background = "var(--success)";
+      circle.style.borderColor = "var(--success)";
+      gsap.to(circle.querySelector('svg'), { opacity: 1, duration: 0.3 });
+      n.querySelector('.step-lbl').style.color = "var(--primary)";
+
+      if(window.currentGSAPStep === max && typeof confetti !== 'undefined') {
+         setTimeout(() => {
+           confetti({ particleCount: 150, spread: 80, origin: {y: 0.6}, colors: ['#10B981', '#3B82F6', '#FFFFFF'] });
+         }, 300);
+      }
+   } else {
+      window.currentGSAPStep = 0;
+      gsap.to('#stepperFill', { width: '0%', duration: 0.4 });
+      nodes.forEach((n, i) => {
+         if(i>0) {
+           n.classList.add('inactive');
+           n.classList.remove('active');
+           n.style.opacity = 0.4;
+           let circle = n.querySelector('.step-circle');
+           circle.style.background = "var(--bg)";
+           circle.style.borderColor = "var(--border)";
+           gsap.to(circle.querySelector('svg'), { opacity: 0, duration: 0.2 });
+           n.querySelector('.step-lbl').style.color = "var(--muted)";
+         }
+      });
+   }
+};
+
+// 4. Policy Card Hover
+const pCard = document.getElementById('gsapPolicyCard');
+if(pCard) {
+  pCard.addEventListener('mouseenter', () => {
+     gsap.to(pCard, { y: -8, boxShadow: '0 25px 50px -12px rgba(37, 99, 235, 0.25)', duration: 0.5, ease: "power2.out" });
+     gsap.to('#gsapShield', { rotate: 360, scale: 1.1, boxShadow: '0 0 30px rgba(37,99,235,0.6)', duration: 0.8, ease: "back.out(1.4)" });
+  });
+  pCard.addEventListener('mouseleave', () => {
+     gsap.to(pCard, { y: 0, boxShadow: '0 4px 6px rgba(0,0,0,0.1)', duration: 0.5, ease: "power2.out" });
+     gsap.to('#gsapShield', { rotate: 0, scale: 1, boxShadow: '0 0 0 rgba(0,0,0,0)', duration: 0.8 });
+  });
+}
+
+// 5. Testimonials Carousel
+if(document.getElementById('testimWrapper') && typeof Draggable !== 'undefined') {
+  Draggable.create("#testimWrapper", {
+     type: "x",
+     bounds: {minX: -600, maxX: 0},
+     onDrag: function() {
+       gsap.to('.testim-card', { rotateY: this.getDirection() === "right" ? 5 : -5, duration: 0.2 });
+     },
+     onRelease: function() {
+       gsap.to('.testim-card', { rotateY: 0, duration: 0.4, ease: "power2.out" });
+     }
+  });
+}
+
+});

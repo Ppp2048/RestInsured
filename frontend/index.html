@@ -20,8 +20,7 @@
     <button class="nav-tab active" onclick="switchTab('analyzer',this)">AI Analyzer</button>
     <button class="nav-tab" onclick="switchTab('comparison',this)">Compare</button>
     <button class="nav-tab" onclick="switchTab('policy',this)">Scraper</button>
-    <button class="nav-tab" onclick="switchTab('calculators',this)">Calculators</button>
-    <a href="react-components.html" class="nav-tab" style="color:var(--accent);border-color:rgba(37,99,235,0.2);margin-left:8px;text-decoration:none">React 3D Showcase ✦</a>
+    <button class="nav-tab" onclick="switchTab('calculators',this)">ML Dashboard</button>
   </div>
 </nav>
 
@@ -471,58 +470,188 @@
     </div>
   </div>
 
-<!-- ══════════ TAB 4: CALCULATORS ══════════ -->
+<!-- ══════════ TAB 4: ML DASHBOARD ══════════ -->
 <div id="tab-calculators" class="tab-content">
   <div class="analyzer-wrap">
     <div style="margin-bottom:2rem">
-      <h2 style="font-size:2.2rem;margin-bottom:0.8rem;color:var(--primary)">Financial Calculators</h2>
-      <p style="color:var(--muted);font-size:16px;max-width:600px">Determine your precise coverage needs using our Human Life Value (HLV) actuarial calculator.</p>
+      <h2 style="font-size:2.2rem;margin-bottom:0.8rem;color:var(--primary)">Interactive ML Dashboard</h2>
+      <p style="color:var(--muted);font-size:16px;max-width:600px">Experience instant, native actuarial predictions, ultra-fast 3D claim tracking and drag-and-drop bundle customization powered by GSAP.</p>
     </div>
 
-    <!-- HLV Calculator -->
-    <div class="form-card" style="box-shadow:none;border-color:var(--border);">
-      <h2 class="form-title" style="font-size:1.4rem">Human Life Value Calculator</h2>
-      <p class="form-subtitle" style="margin-bottom:1.5rem">Calculates the present value of your future net income over your working years.</p>
+    <div class="grid-layout" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));gap:2rem;">
       
-      <div class="field-row">
-        <div class="field">
-          <label>Current Age (Years)</label>
-          <input type="number" id="hlvAge" value="30" min="18" max="65">
+      <!-- HLV Calculator (Existing) -->
+      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);">
+        <h2 class="form-title" style="font-size:1.4rem">Human Life Value Model</h2>
+        <p class="form-subtitle" style="margin-bottom:1.5rem">Calculates the present value of your future net income over your working years.</p>
+        
+        <div class="field-row">
+          <div class="field">
+            <label>Current Age (Years)</label>
+            <input type="number" id="hlvAge" value="30" min="18" max="65">
+          </div>
+          <div class="field">
+            <label>Retirement Age (Years)</label>
+            <input type="number" id="hlvRetireAge" value="60" min="40" max="75">
+          </div>
         </div>
-        <div class="field">
-          <label>Retirement Age (Years)</label>
-          <input type="number" id="hlvRetireAge" value="60" min="40" max="75">
+        <div class="field-row">
+          <div class="field">
+            <label>Current Annual Income (₹)</label>
+            <input type="number" id="hlvIncome" value="1200000" step="50000">
+          </div>
+          <div class="field">
+            <label>Personal Expenses (% of income)</label>
+            <input type="number" id="hlvExpensePct" value="30" min="0" max="80" title="Amount you spend on yourself">
+          </div>
         </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Current Annual Income (₹)</label>
-          <input type="number" id="hlvIncome" value="1200000" step="50000">
+        <div class="field-row">
+          <div class="field">
+            <label>Expected Income Growth (Annual %)</label>
+            <input type="number" id="hlvIncomeGrowth" value="5" min="0" max="15">
+          </div>
+          <div class="field">
+            <label>Discount/Investment Rate (Annual %)</label>
+            <input type="number" id="hlvDiscountRate" value="8" min="3" max="15">
+          </div>
         </div>
-        <div class="field">
-          <label>Personal Expenses (% of income)</label>
-          <input type="number" id="hlvExpensePct" value="30" min="0" max="80" title="Amount you spend on yourself">
+        <div class="form-nav" style="margin-top:1rem;padding-top:1.5rem;">
+          <button type="button" class="btn btn-primary" onclick="calculateHLV()">Calculate Minimum Cover →</button>
         </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Expected Income Growth (Annual %)</label>
-          <input type="number" id="hlvIncomeGrowth" value="5" min="0" max="15">
+
+        <div id="hlvResultPane" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Recommended Life Cover</div>
+          <div id="hlvResultValue" style="font-size:2.5rem;font-weight:800;color:var(--success);line-height:1">₹0</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">Based on your working years remaining and net contribution to your family. You should opt for a Term Insurance closest to this amount.</div>
         </div>
-        <div class="field">
-          <label>Discount/Investment Rate (Annual %)</label>
-          <input type="number" id="hlvDiscountRate" value="8" min="3" max="15">
-        </div>
-      </div>
-      <div class="form-nav" style="margin-top:1rem;padding-top:1.5rem;">
-        <button type="button" class="btn btn-primary" onclick="calculateHLV()">Calculate Minimum Cover →</button>
       </div>
 
-      <div id="hlvResultPane" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
-        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Recommended Life Cover</div>
-        <div id="hlvResultValue" style="font-size:2.5rem;font-weight:800;color:var(--success);line-height:1">₹0</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:8px">Based on your working years remaining and net contribution to your family. You should opt for a Term Insurance closest to this amount.</div>
+      <!-- Quote Calculator -->
+      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);display:flex;flex-direction:column;">
+        <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+          Dynamic Quote Engine
+        </h2>
+        <div style="margin-top:1rem">
+          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px"><label>Coverage Amount</label><span id="covVal" style="color:var(--primary);font-weight:600">₹50,00,000</span></div>
+          <input type="range" id="gsapCoverage" min="1000000" max="10000000" step="100000" value="5000000" style="width:100%;margin-top:8px">
+          <div style="width:100%;height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden">
+            <div id="gsapCovBar" style="height:100%;width:50%;background:linear-gradient(90deg,var(--accent),#60A5FA)"></div>
+          </div>
+        </div>
+        <div style="margin-top:2rem">
+          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px"><label>Voluntary Deductible</label><span id="dedVal" style="color:var(--primary);font-weight:600">₹50,000</span></div>
+          <input type="range" id="gsapDeductible" min="0" max="100000" step="5000" value="50000" style="width:100%;margin-top:8px">
+        </div>
+        <div style="margin-top:auto;padding-top:2rem">
+          <div style="padding:1.5rem;background:var(--surface-hover);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center">
+             <div style="font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:700">Estimated Annual Premium</div>
+             <div id="gsapPremium" style="font-size:3rem;font-weight:800;color:var(--success);margin-top:8px">₹6,500</div>
+          </div>
+        </div>
       </div>
+
+      <!-- 3D Policy Customizer -->
+      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);overflow:hidden">
+        <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          3D Bundle Customizer
+        </h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:2rem">Drag icons below into the bundle zone to unlock instant savings. Powered by GSAP Physics.</p>
+        <div id="bundleContainer" style="display:flex;justify-content:space-around;padding:1rem 0;perspective:1000px">
+           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+           </div>
+           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2" ry="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M3 11l2-7h14l2 7"/></svg>
+           </div>
+           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+           </div>
+        </div>
+        <div id="bundleZone" style="width:100%;height:100px;border:2px dashed var(--border);border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:14px;margin-top:1rem;transition:all 0.3s">
+           Drop icons here to bundle
+           <div id="bundleMsg" style="display:none;color:var(--success);font-weight:700;font-size:12px;margin-top:4px">15% Multi-line discount unlocked!</div>
+        </div>
+      </div>
+
+      <!-- Claims Stepper -->
+      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);">
+         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          Claims Progress Tracking
+        </h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:3rem">Click the tracker area to simulate real-time claim progression.</p>
+        <div id="gsapStepper" style="position:relative;padding:0 10px;cursor:pointer" onclick="advanceStepper()">
+          <div style="position:absolute;top:13px;left:10px;right:10px;height:4px;background:var(--surface-hover);border-radius:2px;z-index:0"></div>
+          <div id="stepperFill" style="position:absolute;top:13px;left:10px;height:4px;width:0%;background:var(--success);border-radius:2px;z-index:1"></div>
+          <div style="display:flex;justify-content:space-between;position:relative;z-index:2">
+             <div class="step-node active step-fillable" data-idx="0" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px">
+                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--success);border:2px solid var(--success);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--primary)">Filed</span>
+             </div>
+             <div class="step-node inactive step-fillable" data-idx="1" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
+                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Reviewed</span>
+             </div>
+             <div class="step-node inactive step-fillable" data-idx="2" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
+                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Approved</span>
+             </div>
+             <div class="step-node inactive step-fillable" data-idx="3" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
+                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Paid</span>
+             </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Policy Shield Card -->
+      <div id="gsapPolicyCard" class="form-card" style="margin:0;box-shadow:0 4px 6px rgba(0,0,0,0.1);border-color:var(--border);display:flex;flex-direction:column;cursor:pointer">
+         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Featured Policy
+        </h2>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;padding:1rem">
+           <div id="gsapShield" style="width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#93C5FD);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+           </div>
+           <h3 style="margin:0 0 8px;font-size:1.2rem;color:var(--primary)">Optima Restore Shield</h3>
+           <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.5">Comprehensive coverage that magically restores your sum insured upon exhaustion. Hover for 3D physics detail.</p>
+        </div>
+      </div>
+      
+      <!-- Testimonials -->
+      <div class="form-card" style="grid-column:1/-1;margin:0;box-shadow:none;border-color:var(--border);overflow:hidden">
+         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Live User Testimonials
+        </h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:1.5rem">Grab and drag the cards horizontally to view physics-constrained carousels.</p>
+        <div id="testimWrapper" style="display:flex;gap:1.5rem;cursor:grab;padding-bottom:1rem;width:fit-content" class="drag-x">
+           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
+              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
+              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"The UI here is butter smooth. I saved ₹15,000 on my premium within flat 5 minutes."</p>
+              <strong style="font-size:13px;color:var(--primary)">Rahul S.</strong>
+           </div>
+           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
+              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
+              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Hands down the best insurance portal in India. Claim was settled seamlessly."</p>
+              <strong style="font-size:13px;color:var(--primary)">Priya M.</strong>
+           </div>
+           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
+              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
+              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Visuals make boring insurance actually engaging. The 3D customizer is mind blowing."</p>
+              <strong style="font-size:13px;color:var(--primary)">Karan T.</strong>
+           </div>
+           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
+              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
+              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Unmatched pricing and transparency. The analytics dashboard gave me so much clarity."</p>
+              <strong style="font-size:13px;color:var(--primary)">Neha K.</strong>
+           </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </div>
@@ -583,6 +712,9 @@
 </div> <!-- End page-container -->
 
 <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 <script src="js/api.js"></script>
 <script src="js/app.js"></script>
 </body>

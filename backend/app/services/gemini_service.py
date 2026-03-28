@@ -14,8 +14,8 @@ def get_ai_analysis(prompt: str) -> Dict[str, Any]:
         # Configure Gemini API
         genai.configure(api_key=api_key)
         
-        # Initialize the model
-        model = genai.GenerativeModel('gemini-1.5-pro')
+        # Initialize the model (using a globally available model alias)
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Generate response
         response = model.generate_content(prompt)

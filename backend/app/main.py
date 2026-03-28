@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# Load environment variables from .env file before anything else
+load_dotenv()
+
 from app.routes import analyze, predict, scrape
 
 app = FastAPI(title="RestInsured API", description="AI + ML Insurance Analysis Platform")
