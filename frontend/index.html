@@ -1,741 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RestInsured — Premium AI Insurance Advisor</title>
-<link rel="stylesheet" href="styles/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RestInsured — Actuarial AI & Policy Deconstructor</title>
+  <meta name="description" content="AI-powered insurance analysis, plan comparison, and policy deconstruction for Indian insurance markets.">
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
-<div class="bg-blob-1"></div>
-<div class="bg-blob-2"></div>
+<!-- AURORA BG -->
+<div class="aurora-bg"><div class="aurora-1"></div><div class="aurora-2"></div></div>
+<div class="body-glow" id="bodyGlow"></div>
 
-<!-- NAV -->
-<nav>
-  <a class="logo" href="#">
-    <div class="logo-mark">R+</div>
-    <span class="logo-text">RestInsured</span>
-  </a>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchTab('analyzer',this)">AI Analyzer</button>
-    <button class="nav-tab" onclick="switchTab('comparison',this)">Compare</button>
-    <button class="nav-tab" onclick="switchTab('policy',this)">Scraper</button>
-    <button class="nav-tab" onclick="switchTab('calculators',this)">ML Dashboard</button>
-  </div>
-</nav>
-
-<div class="page-container">
-  <div class="main-column">
-
-<!-- ══════════ TAB 1: ANALYZER ══════════ -->
-<div id="tab-analyzer" class="tab-content active">
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">✦ Actuarial Intelligence Platform</div>
-      <h1>Predict your perfect<br>insurance match.</h1>
-      <p>Analyze 40+ Indian insurance plans. Our ML model predicts premiums, scores risk, and recommends the best fit using actuarial data.</p>
+<!-- ═══════ NAVBAR ═══════ -->
+<header id="siteHeader">
+  <nav>
+    <a class="nav-logo" href="#">RestInsured<span>+</span></a>
+    <div class="nav-links">
+      <a href="#analyzer" class="nav-link">Risk Audit</a>
+      <a href="#comparison" class="nav-link">Plan Matrix</a>
+      <a href="#deconstructor" class="nav-link">Policy NLP</a>
+      <a href="#calculators" class="nav-link">Calculators</a>
     </div>
-    <div class="hero-asset-container">
-      <img src="assets/shield.png" class="hero-asset" alt="3D Insurance Security Asset">
-    </div>
-  </div>
+    <a href="#analyzer" class="nav-cta">Analyze Risk</a>
+  </nav>
+</header>
 
-  <!-- STEP FORM -->
-  <div id="formSection">
-    <div class="progress-wrap">
-      <div class="progress-steps" id="progressSteps">
-        <div class="progress-line"></div>
-        <div class="progress-fill" id="progressFill" style="--pct:0%;width:0%"></div>
-        <div class="p-step active" data-step="0"><div class="p-dot">1</div><span class="p-label">Profile</span></div>
-        <div class="p-step" data-step="1"><div class="p-dot">2</div><span class="p-label">Lifestyle</span></div>
-        <div class="p-step" data-step="2"><div class="p-dot">3</div><span class="p-label">Family</span></div>
-        <div class="p-step" data-step="3"><div class="p-dot">4</div><span class="p-label">Health</span></div>
-        <div class="p-step" data-step="4"><div class="p-dot">5</div><span class="p-label">Needs</span></div>
-      </div>
+<main>
+  <!-- ═══════ HERO ═══════ -->
+  <section class="hero-section">
+    <div class="hero-badge"><span></span> AI-POWERED ACTUARIAL AUDIT</div>
+    <h1>
+      Master your insurance.<br>
+      <span class="hero-line">
+        <span class="rotate-wrap">
+          <span class="rotate-word active">Audit</span>
+          <span class="rotate-word">Own</span>
+          <span class="rotate-word">Optimize</span>
+          <span class="rotate-word">Fix</span>
+        </span>
+        it.
+      </span>
+    </h1>
+    <p>90% of Indians are underinsured. Our Actuarial AI benchmarks 40+ plans to predict your true risk and perfect match.</p>
+    <div style="display:flex;gap:16px;justify-content:center">
+      <a href="#analyzer" class="btn btn-primary">Start Risk Audit →</a>
+      <a href="#deconstructor" class="btn btn-ghost">Deconstruct Policy</a>
     </div>
+  </section>
 
-    <!-- STEP 0: Basic Profile -->
-    <div class="form-card" id="step-0">
-      <h2 class="form-title">Basic Profile</h2>
-      <p class="form-subtitle">Enter your personal details to establish your baseline risk profile.</p>
-      <div class="field-row">
-        <div class="field">
-          <label>Age</label>
-          <input type="number" id="age" min="18" max="80" placeholder="e.g. 32" value="">
-        </div>
-        <div class="field">
-          <label>Gender</label>
-          <select id="gender">
-            <option value="">Select</option>
-            <option>Male</option><option>Female</option><option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>State / Region</label>
-          <select id="city">
-            <option value="">Select State / Region</option>
-            <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option>
-            <option>Delhi NCR</option><option>Gujarat</option><option>Haryana</option>
-            <option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option>
-            <option>Maharashtra</option><option>Odisha</option><option>Punjab</option>
-            <option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option>
-            <option>Uttar Pradesh</option><option>West Bengal</option><option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Annual Income</label>
-          <select id="income">
-            <option value="">Select range</option>
-            <option value="3">Below ₹3 LPA</option>
-            <option value="6">₹3–6 LPA</option>
-            <option value="12">₹6–12 LPA</option>
-            <option value="20">₹12–20 LPA</option>
-            <option value="50">₹20–50 LPA</option>
-            <option value="100">Above ₹50 LPA</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row single">
-        <div class="field">
-          <label>Insurance Type</label>
-          <select id="insuranceType">
-            <option value="">Select</option>
-            <option>Health Insurance</option>
-            <option>Term Life Insurance</option>
-            <option>Critical Illness</option>
-            <option>Family Floater Health</option>
-            <option>Group Health (Employee)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-nav">
-        <span style="font-size:12px;color:var(--muted);font-weight:500">Step 1 of 5</span>
-        <button class="btn btn-primary" onclick="nextStep(0)">Next step →</button>
-      </div>
-    </div>
+  <div class="page-container">
 
-    <!-- STEP 1: Occupation -->
-    <div class="form-card" id="step-1" style="display:none">
-      <h2 class="form-title">Occupation & Lifestyle</h2>
-      <p class="form-subtitle">Your environment and lifestyle directly affect insurance underwriting.</p>
-      <div class="field-row single">
-        <div class="field">
-          <label>Occupation Category</label>
-          <select id="occupation">
-            <option value="">Select</option>
-            <option>Desk / IT / Office</option>
-            <option>Manufacturing / Industrial</option>
-            <option>Healthcare Professional</option>
-            <option>Business Owner / Entrepreneur</option>
-            <option>Self-Employed / Freelancer</option>
-            <option>Manual Labour</option>
-          </select>
+      <!-- ═══════════════════════════════════════ -->
+      <!-- ═══════ SECTION: AI RISK AUDIT ═══════ -->
+      <!-- ═══════════════════════════════════════ -->
+      <section id="analyzer" class="section">
+        <div class="section-header">
+          <h2>Actuarial Risk Prediction</h2>
+          <p>Precision-mapped against IRDAI 2024 registry data.</p>
         </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Work Environment</label>
-          <select id="workEnv">
-            <option value="">Select</option>
-            <option>Indoor Desk</option>
-            <option>Outdoor / Field</option>
-            <option>High Risk / Industrial</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Tobacco Use</label>
-          <select id="tobacco">
-            <option value="none">Non-user</option>
-            <option value="smoke">Smoker</option>
-            <option value="chew">Tobacco chewer</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row single">
-        <div class="field">
-          <label>Alcohol Consumption</label>
-          <select id="alcohol">
-            <option value="none">None</option>
-            <option value="occasional">Occasional (1–2 / week)</option>
-            <option value="moderate">Moderate (3–7 / week)</option>
-            <option value="heavy">Heavy (8+ / week)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-nav">
-        <button class="btn btn-ghost" onclick="prevStep(1)">Back</button>
-        <button class="btn btn-primary" onclick="nextStep(1)">Next step →</button>
-      </div>
-    </div>
 
-    <!-- STEP 2: Family Status -->
-    <div class="form-card" id="step-2" style="display:none">
-      <h2 class="form-title">Family Dependant Structure</h2>
-      <p class="form-subtitle">Calculate coverage needs based on your family structure.</p>
-      <div class="field-row">
-        <div class="field">
-          <label>Marital Status</label>
-          <select id="marital">
-            <option>Single</option><option>Married</option><option>Divorced</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Children</label>
-          <select id="children" onchange="toggleChildAges()">
-            <option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option>
-          </select>
-          <div id="childrenAges" class="dynamic-inputs" style="display:none;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;"></div>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Dependent Parents</label>
-          <select id="parents" onchange="toggleParentAges()">
-            <option value="none">None</option>
-            <option value="father">Father only</option>
-            <option value="mother">Mother only</option>
-            <option value="both">Both Parents</option>
-            <option value="in_laws">In-laws</option>
-          </select>
-          <div id="parentAges" class="dynamic-inputs" style="display:none;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;"></div>
-        </div>
-        <div class="field">
-          <label>Any parents 60+?</label>
-          <select id="elderlyParents">
-            <option value="no">No</option><option value="yes">Yes</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row single">
-        <div class="field">
-          <label>Desired Coverage Amount</label>
-          <select id="coverageAmount">
-            <option value="">Select Target Coverage</option>
-            <option value="5">₹5 Lakh</option>
-            <option value="10">₹10 Lakh (Recommended Health)</option>
-            <option value="25">₹25 Lakh</option>
-            <option value="50">₹50 Lakh</option>
-            <option value="100">₹1 Crore (Term)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-nav">
-        <button class="btn btn-ghost" onclick="prevStep(2)">Back</button>
-        <button class="btn btn-primary" onclick="nextStep(2)">Next step →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3: Health History -->
-    <div class="form-card" id="step-3" style="display:none">
-      <h2 class="form-title">Medical History</h2>
-      <p class="form-subtitle">These parameters map directly to underwriting risk factors.</p>
-      <div class="field">
-        <label>Pre-existing Conditions</label>
-        <div class="tags-wrap" id="conditionTags">
-          <span class="tag" onclick="toggleTag(this,'condition')">Diabetes (Type 2)</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Hypertension</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Heart Disease</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Asthma / COPD</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Thyroid Disorder</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Obesity</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">Mental Health</span>
-          <span class="tag" onclick="toggleTag(this,'condition')">None</span>
-        </div>
-      </div>
-      <div class="field" style="margin-top:1.2rem">
-        <label>Family Medical History</label>
-        <div class="tags-wrap" id="familyTags">
-          <span class="tag" onclick="toggleTag(this,'family')">Diabetes</span>
-          <span class="tag" onclick="toggleTag(this,'family')">Heart Disease</span>
-          <span class="tag" onclick="toggleTag(this,'family')">Cancer</span>
-          <span class="tag" onclick="toggleTag(this,'family')">None</span>
-        </div>
-      </div>
-      <div class="field-row" style="margin-top:1.2rem">
-        <div class="field">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <label style="margin:0">BMI Category</label>
-            <button type="button" class="btn btn-ghost" style="padding:2px 8px;font-size:11px;height:auto;border-radius:4px" onclick="toggleBMICalc()">Calculate BMI</button>
-          </div>
-          <select id="bmi">
-            <option value="normal">Normal</option>
-            <option value="overweight">Overweight</option>
-            <option value="obese">Obese</option>
-          </select>
-          <div id="bmiCalcPane" class="bmi-pane" style="display:none;margin-top:8px;padding:12px;background:var(--surface-hover);border:1px solid var(--border);border-radius:var(--radius-sm);">
-            <div style="display:flex;gap:8px;margin-bottom:8px;">
-               <input type="number" id="bmiHeight" placeholder="Height (cm)" style="flex:1;padding:8px;font-size:13px;border:1px solid var(--border);border-radius:4px" />
-               <input type="number" id="bmiWeight" placeholder="Weight (kg)" style="flex:1;padding:8px;font-size:13px;border:1px solid var(--border);border-radius:4px" />
+        <div class="glass-panel" id="formSection">
+          <!-- Progress Bar -->
+          <div class="progress-wrap">
+            <div class="progress-line-bg"></div>
+            <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            <div class="progress-steps">
+              <div class="p-step active"><div class="p-dot">1</div><span class="p-label">Profile</span></div>
+              <div class="p-step"><div class="p-dot">2</div><span class="p-label">Lifestyle</span></div>
+              <div class="p-step"><div class="p-dot">3</div><span class="p-label">Family</span></div>
+              <div class="p-step"><div class="p-dot">4</div><span class="p-label">Health</span></div>
+              <div class="p-step"><div class="p-dot">5</div><span class="p-label">Needs</span></div>
             </div>
-            <button type="button" class="btn btn-primary" style="width:100%;padding:6px;font-size:12px;" onclick="calculateAndSetBMI()">Calculate & Apply</button>
+          </div>
+
+          <!-- ══ STEP 0: PROFILE ══ -->
+          <div id="step-0">
+            <h3 class="step-title">Basic Profile</h3>
+            <p class="step-desc">Enter your personal details to establish your baseline risk profile.</p>
+            <div class="field-row">
+              <div class="field"><label>Age</label><input type="number" id="age" placeholder="Enter your age"></div>
+              <div class="field"><label>Gender</label><select id="gender"><option value="" disabled selected>Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>State / Region</label>
+                <select id="state">
+                  <option value="" disabled selected>Select State / Region</option>
+                  <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option><option>Delhi NCR</option><option>Gujarat</option><option>Haryana</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option><option>Uttar Pradesh</option><option>West Bengal</option><option>Other</option>
+                </select>
+              </div>
+              <div class="field"><label>Annual Income</label>
+                <select id="income">
+                  <option value="" disabled selected>Select range</option>
+                  <option value="3">Below ₹3 LPA</option><option value="6">₹3–6 LPA</option><option value="12">₹6–12 LPA</option><option value="20">₹12–20 LPA</option><option value="50">₹20–50 LPA</option><option value="75">Above ₹50 LPA</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Insurance Type</label>
+                <select id="insuranceType">
+                  <option value="" disabled selected>Select</option>
+                  <option>Health Insurance</option><option>Term Life Insurance</option><option>Critical Illness</option><option>Family Floater Health</option><option>Group Health (Employee)</option>
+                </select>
+              </div>
+              <div class="field"></div>
+            </div>
+            <div class="form-nav"><button class="btn btn-primary" onclick="nextStep(0)">Next step →</button></div>
+          </div>
+
+          <!-- ══ STEP 1: LIFESTYLE ══ -->
+          <div id="step-1" style="display:none">
+            <h3 class="step-title">Occupation & Lifestyle</h3>
+            <p class="step-desc">Your environment and lifestyle directly affect insurance underwriting.</p>
+            <div class="field-row">
+              <div class="field"><label>Occupation Category</label>
+                <select id="occupation"><option value="" disabled selected>Select</option><option>Desk / IT / Office</option><option>Manufacturing / Industrial</option><option>Healthcare Professional</option><option>Business Owner / Entrepreneur</option><option>Self-Employed / Freelancer</option><option>Manual Labour</option></select>
+              </div>
+              <div class="field"><label>Work Environment</label>
+                <select id="workEnv"><option value="" disabled selected>Select</option><option>Indoor Desk</option><option>Outdoor / Field</option><option>High Risk / Industrial</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Tobacco Use</label>
+                <select id="tobacco"><option value="none">Non-user</option><option value="smoke">Smoker</option><option value="chew">Tobacco chewer</option></select>
+              </div>
+              <div class="field"><label>Alcohol Consumption</label>
+                <select id="alcohol"><option value="none">None</option><option>Occasional (1–2 / week)</option><option>Moderate (3–7 / week)</option><option>Heavy (8+ / week)</option></select>
+              </div>
+            </div>
+            <div class="form-nav">
+              <button class="btn btn-ghost" onclick="prevStep(1)">Back</button>
+              <button class="btn btn-primary" onclick="nextStep(1)">Next step →</button>
+            </div>
+          </div>
+
+          <!-- ══ STEP 2: FAMILY ══ -->
+          <div id="step-2" style="display:none">
+            <h3 class="step-title">Family Dependant Structure</h3>
+            <p class="step-desc">Calculate coverage needs based on your family structure.</p>
+            <div class="field-row">
+              <div class="field"><label>Marital Status</label><select id="marital"><option value="" disabled selected>Choose...</option><option>Single</option><option>Married</option><option>Divorced</option></select></div>
+              <div class="field"><label>Children</label>
+                <select id="children" onchange="toggleChildAges()"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option></select>
+                <div id="childrenAges" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"></div>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Dependent Parents</label>
+                <select id="parents" onchange="toggleParentAges()"><option value="none">None</option><option value="father">Father only</option><option value="mother">Mother only</option><option value="both">Both Parents</option><option value="in_laws">In-laws</option></select>
+                <div id="parentAges" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"></div>
+              </div>
+              <div class="field"><label>Any parents 60+?</label><select id="elderlyParents"><option value="no">No</option><option value="yes">Yes</option></select></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Desired Coverage Amount</label>
+                <select id="coverageAmount"><option value="" disabled selected>Select Target Coverage</option><option value="5">₹5 Lakh</option><option value="10">₹10 Lakh (Recommended Health)</option><option value="25">₹25 Lakh</option><option value="50">₹50 Lakh</option><option value="100">₹1 Crore (Term)</option></select>
+              </div>
+              <div class="field"></div>
+            </div>
+            <div class="form-nav">
+              <button class="btn btn-ghost" onclick="prevStep(2)">Back</button>
+              <button class="btn btn-primary" onclick="nextStep(2)">Next step →</button>
+            </div>
+          </div>
+
+          <!-- ══ STEP 3: HEALTH ══ -->
+          <div id="step-3" style="display:none">
+            <h3 class="step-title">Medical History</h3>
+            <p class="step-desc">These parameters map directly to underwriting risk factors.</p>
+
+            <div class="field" style="margin-bottom:28px">
+              <label>Pre-existing Conditions</label>
+              <div class="tags-wrap" id="conditionTags">
+                <span class="tag" onclick="toggleTag(this,'condition')">Diabetes (Type 2)</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Hypertension</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Heart Disease</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Asthma / COPD</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Thyroid Disorder</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Obesity</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">Mental Health</span>
+                <span class="tag" onclick="toggleTag(this,'condition')">None</span>
+              </div>
+            </div>
+
+            <div class="field" style="margin-bottom:28px">
+              <label>Family Medical History</label>
+              <div class="tags-wrap" id="familyHistoryTags">
+                <span class="tag" onclick="toggleTag(this,'family')">Diabetes</span>
+                <span class="tag" onclick="toggleTag(this,'family')">Heart Disease</span>
+                <span class="tag" onclick="toggleTag(this,'family')">Cancer</span>
+                <span class="tag" onclick="toggleTag(this,'family')">None</span>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>BMI Category <span style="float:right;cursor:pointer;color:var(--accent)" onclick="toggleBMICalc()">Calculate BMI ↓</span></label>
+                <select id="bmi"><option value="" disabled selected>Select</option><option value="normal">Normal</option><option value="overweight">Overweight</option><option value="obese">Obese</option></select>
+                <div id="bmiCalcPanel" style="display:none;margin-top:12px">
+                  <div class="field-row" style="margin-bottom:8px">
+                    <div class="field"><label>Height (cm)</label><input type="number" id="bmiHeight" placeholder="175"></div>
+                    <div class="field"><label>Weight (kg)</label><input type="number" id="bmiWeight" placeholder="70"></div>
+                  </div>
+                  <button class="btn btn-ghost" onclick="calculateAndSetBMI()" style="font-size:12px;padding:8px 16px">Calculate & Apply</button>
+                </div>
+              </div>
+              <div class="field"><label>Recent Hospitalizations</label>
+                <select id="hospitalizations"><option value="0">None in last 3 yrs</option><option value="1">1 time</option><option value="2">2+ times</option></select>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button class="btn btn-ghost" onclick="prevStep(3)">Back</button>
+              <button class="btn btn-primary" onclick="nextStep(3)">Next step →</button>
+            </div>
+          </div>
+
+          <!-- ══ STEP 4: NEEDS ══ -->
+          <div id="step-4" style="display:none">
+            <h3 class="step-title">Coverage Preference Constraints</h3>
+            <p class="step-desc">Tell the AI what specifically matters to you to optimize the match.</p>
+
+            <div class="field" style="margin-bottom:28px">
+              <label>Priority Features</label>
+              <div class="tags-wrap" id="priorityTags">
+                <span class="tag" onclick="toggleTag(this,'priority')">No-claim bonus</span>
+                <span class="tag" onclick="toggleTag(this,'priority')">Cashless hospitals</span>
+                <span class="tag" onclick="toggleTag(this,'priority')">OPD coverage</span>
+                <span class="tag" onclick="toggleTag(this,'priority')">Maternity benefits</span>
+                <span class="tag" onclick="toggleTag(this,'priority')">Critical illness rider</span>
+                <span class="tag" onclick="toggleTag(this,'priority')">Low premium focus</span>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field"><label>Max Monthly Budget</label>
+                <select id="budget"><option value="">No preference</option><option value="1000">₹1,000 / mo</option><option value="2000">₹2,000 / mo</option><option value="3500">₹3,500 / mo</option><option value="5000">₹5,000 / mo</option></select>
+              </div>
+              <div class="field"><label>Insurer Topology</label>
+                <select id="topology"><option value="any">Any</option><option value="psu">Govt / PSU</option><option value="private">Private</option></select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Edge constraints (Optional)</label>
+              <textarea id="notes" placeholder="e.g. Traveling abroad, extreme sports, specific hospital network..."></textarea>
+            </div>
+
+            <div class="form-nav">
+              <button class="btn btn-ghost" onclick="prevStep(4)">Back</button>
+              <button class="btn btn-primary" onclick="runAnalysis()" style="padding:16px 40px">Run Analysis Prediction →</button>
+            </div>
           </div>
         </div>
-        <div class="field">
-          <label>Recent Hospitalizations</label>
-          <select id="hospitalized">
-            <option value="0">None in last 3 yrs</option>
-            <option value="1">1 time</option>
-            <option value="2">2+ times</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-nav">
-        <button class="btn btn-ghost" onclick="prevStep(3)">Back</button>
-        <button class="btn btn-primary" onclick="nextStep(3)">Next step →</button>
-      </div>
-    </div>
 
-    <!-- STEP 4: Coverage Preferences -->
-    <div class="form-card" id="step-4" style="display:none">
-      <h2 class="form-title">Coverage Preference Constraints</h2>
-      <p class="form-subtitle">Tell the AI what specifically matters to you to optimize the match.</p>
-      <div class="field">
-        <label>Priority Features</label>
-        <div class="tags-wrap" id="priorityTags">
-          <span class="tag" onclick="toggleTag(this,'priority')">No-claim bonus</span>
-          <span class="tag" onclick="toggleTag(this,'priority')">Cashless hospitals</span>
-          <span class="tag" onclick="toggleTag(this,'priority')">OPD coverage</span>
-          <span class="tag" onclick="toggleTag(this,'priority')">Maternity benefits</span>
-          <span class="tag" onclick="toggleTag(this,'priority')">Critical illness rider</span>
-          <span class="tag" onclick="toggleTag(this,'priority')">Low premium focus</span>
+        <!-- LOADING -->
+        <div id="loadingSection" style="display:none;text-align:center;padding:80px 0">
+          <div class="spinner" style="margin:0 auto 24px"></div>
+          <h3 style="color:var(--primary)">Executing models...</h3>
+          <p style="color:rgba(255,255,255,0.3);margin-top:8px;font-size:13px">Running premium regressions & cross-referencing database...</p>
         </div>
-      </div>
-      <div class="field-row" style="margin-top:1.2rem">
-        <div class="field">
-          <label>Max Monthly Budget</label>
-          <select id="budget">
-            <option value="">No preference</option>
-            <option value="1000">₹1,000 / mo</option>
-            <option value="2000">₹2,000 / mo</option>
-            <option value="3500">₹3,500 / mo</option>
-            <option value="5000">₹5,000 / mo</option>
-          </select>
+
+        <!-- RESULTS -->
+        <div id="resultsSection" style="display:none;margin-top:40px">
+          <div class="glass-panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px">
+              <div><h2 id="resultTitle">Analysis Complete</h2><p id="resultSubtitle" style="color:rgba(255,255,255,0.35);margin-top:4px;font-size:14px"></p></div>
+              <div style="text-align:right"><div id="riskScore" style="font-size:3.5rem;color:var(--primary);font-weight:800;line-height:1">—</div><span id="riskLabel" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.3)">Risk Score</span></div>
+            </div>
+            <div class="glass-panel" style="margin-bottom:32px;border-color:rgba(16,185,129,0.2);background:rgba(16,185,129,0.04)">
+              <h4 style="color:var(--primary);margin-bottom:8px;font-size:14px">Actuarial Insight</h4>
+              <div id="aiInsightText" style="color:rgba(255,255,255,0.55);line-height:1.6;font-size:14px">Analyzing…</div>
+            </div>
+            <div id="plansGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px"></div>
+            <div class="form-nav" style="margin-top:32px">
+              <a href="#comparison" class="btn btn-ghost">View Full Matrix</a>
+              <button class="btn btn-primary" onclick="resetAnalysis()">New Analysis</button>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <label>Insurer Topology</label>
-          <select id="insurerType">
-            <option value="any">Any</option>
-            <option value="psu">Govt / PSU</option>
-            <option value="private">Private</option>
-          </select>
+      </section>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- ═══════ SECTION: PLAN COMPARISON ═══════ -->
+      <!-- ═══════════════════════════════════════════ -->
+      <section id="comparison" class="section">
+        <div class="section-header">
+          <h2>Insurer Plan Matrix</h2>
+          <p>Cross-sectional analysis of 40+ IRDAI-registered plans. Source: IRDAI 23-24 Registry.</p>
         </div>
-      </div>
-      <div class="field-row single" style="margin-top:0.5rem">
-        <div class="field">
-          <label>Edge constraints (Optional)</label>
-          <textarea id="notes" placeholder="e.g. Travel frequently, require international cover..."></textarea>
+        <div class="matrix-filters">
+          <button class="matrix-filter active" onclick="filterMatrix('all',this)">All Plans</button>
+          <button class="matrix-filter" onclick="filterMatrix('health',this)">Health Base</button>
+          <button class="matrix-filter" onclick="filterMatrix('term',this)">Term Life</button>
+          <button class="matrix-filter" onclick="filterMatrix('critical',this)">Critical Illness</button>
+          <button class="matrix-filter" onclick="filterMatrix('senior',this)">Senior Risk</button>
+          <button class="matrix-filter" onclick="filterMatrix('floater',this)">Family Floater</button>
         </div>
-      </div>
-      <div class="form-nav">
-        <button class="btn btn-ghost" onclick="prevStep(4)">Back</button>
-        <button class="btn btn-primary btn-lg" onclick="runAnalysis()" id="analyzeBtn" style="gap:8px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Run Analysis Prediction
-        </button>
-      </div>
-    </div>
+        <div class="glass-panel" style="overflow-x:auto;padding:0">
+          <table>
+            <thead><tr>
+              <th style="padding-left:20px">Provider / Product</th><th>Topology</th><th>Max Sum</th><th>Median Premium</th><th>Claim Settled</th><th>Network Load</th><th>Pre-exist Wait</th><th>Score</th>
+            </tr></thead>
+            <tbody id="compBody"></tbody>
+          </table>
+        </div>
+        <p style="margin-top:16px;font-size:11px;color:rgba(255,255,255,0.2)">* Base matrix indexed on male, non-smoker, sub-30 cohort standard parameters.</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════ -->
+      <!-- ═══════ SECTION: POLICY DECONSTRUCTOR ═══════ -->
+      <!-- ═══════════════════════════════════════════════ -->
+      <section id="deconstructor" class="section">
+        <div class="section-header">
+          <h2>Policy Deconstructor</h2>
+          <p>Paste policy verbiage or URL constraints. Our NLP engine dismantles clauses to detect exclusions.</p>
+        </div>
+        <div class="glass-panel">
+          <div class="policy-tabs">
+            <div class="policy-tab active" onclick="switchPolicyTab('text',this)">Raw Text Input</div>
+            <div class="policy-tab" onclick="switchPolicyTab('url',this)">URL Index</div>
+          </div>
+          <div id="policyTextTab">
+            <div class="field"><textarea id="policyText" placeholder="Paste your policy wording, terms, or specific clauses here..." style="height:180px"></textarea></div>
+          </div>
+          <div id="policyUrlTab" style="display:none">
+            <div class="field"><input type="text" id="policyUrl" placeholder="https://insurer.com/policy-doc.pdf"></div>
+            <p style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:8px">Remote fetch requires active backend relay to bypass CORS.</p>
+          </div>
+          <button class="btn btn-primary" onclick="analyzePolicy()" style="width:100%;margin-top:20px">Execute Analysis →</button>
+          <div id="nlpLoading" style="display:none;text-align:center;padding:40px 0"><div class="spinner" style="margin:0 auto 16px"></div><p style="color:rgba(255,255,255,0.3)">Deconstructing clause parameters...</p></div>
+          <div id="nlpResults" style="display:none;margin-top:32px" class="glass-panel"><div id="nlpContent" style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8"></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════ -->
+      <!-- ═══════ SECTION: CALCULATORS ═══════ -->
+      <!-- ════════════════════════════════════════════ -->
+      <section id="calculators" class="section">
+        <div class="section-header">
+          <h2>Financial Calculators</h2>
+          <p>Determine precise coverage needs using actuarial models.</p>
+        </div>
+
+        <div class="calc-grid">
+          <!-- HLV CALCULATOR -->
+          <div class="glass-panel">
+            <h4 style="margin-bottom:6px">Human Life Value Calculator</h4>
+            <p class="step-desc">Calculates the present value of your future net income over working years.</p>
+            <div class="field-row"><div class="field"><label>Current Age</label><input type="number" id="hlvAge" placeholder="30"></div><div class="field"><label>Retirement Age</label><input type="number" id="hlvRetirement" placeholder="60"></div></div>
+            <div class="field-row"><div class="field"><label>Annual Income (₹)</label><input type="number" id="hlvIncome" placeholder="1200000"></div><div class="field"><label>Personal Expenses (%)</label><input type="number" id="hlvExpenses" placeholder="30"></div></div>
+            <div class="field-row"><div class="field"><label>Income Growth (%)</label><input type="number" id="hlvGrowth" placeholder="8"></div><div class="field"><label>Discount Rate (%)</label><input type="number" id="hlvDiscount" placeholder="6"></div></div>
+            <button class="btn btn-primary" onclick="calculateHLV()" style="width:100%;margin-top:16px">Calculate Minimum Cover →</button>
+            <div id="hlvResult" style="display:none;margin-top:24px;text-align:center;padding:24px;background:rgba(16,185,129,0.06);border-radius:12px;border:1px solid rgba(16,185,129,0.15)">
+              <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:4px">Recommended Life Cover</p>
+              <div id="hlvValue" style="font-size:2.8rem;font-weight:800;color:var(--primary)">₹0</div>
+              <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px">Based on working years remaining and net contribution.</p>
+            </div>
+          </div>
+
+          <!-- BMI CALCULATOR -->
+          <div class="glass-panel">
+            <h4 style="margin-bottom:6px">BMI Calculator</h4>
+            <p class="step-desc">Determine your Body Mass Index for underwriting assessment.</p>
+            <div class="field-row"><div class="field"><label>Height (cm)</label><input type="number" id="bmiCalcHeight" placeholder="175"></div><div class="field"><label>Weight (kg)</label><input type="number" id="bmiCalcWeight" placeholder="70"></div></div>
+            <button class="btn btn-primary" onclick="calculateBMIWidget()" style="width:100%;margin-top:16px">Calculate BMI →</button>
+            <div id="bmiResult" style="display:none;margin-top:24px;text-align:center;padding:24px;background:rgba(99,102,241,0.06);border-radius:12px;border:1px solid rgba(99,102,241,0.15)">
+              <div id="bmiResultVal" style="font-size:3rem;font-weight:800;color:var(--accent)">0</div>
+              <div id="bmiResultLabel" style="font-size:14px;font-weight:700;margin-top:4px"></div>
+            </div>
+          </div>
+
+          <!-- TERM LIFE CALCULATOR -->
+          <div class="glass-panel">
+            <h4 style="margin-bottom:6px">Term Life Premium Estimator</h4>
+            <p class="step-desc">Estimate your term life insurance premium based on age and cover.</p>
+            <div class="field-row"><div class="field"><label>Your Age</label><input type="number" id="termAge" placeholder="30"></div><div class="field"><label>Cover Amount (₹ Cr)</label><input type="number" id="termCover" placeholder="1" step="0.5"></div></div>
+            <div class="field-row"><div class="field"><label>Tobacco User?</label><select id="termTobacco"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="field"><label>Policy Tenure (yrs)</label><input type="number" id="termTenure" placeholder="30"></div></div>
+            <button class="btn btn-primary" onclick="calculateTermPremium()" style="width:100%;margin-top:16px">Estimate Premium →</button>
+            <div id="termResult" style="display:none;margin-top:24px;text-align:center;padding:24px;background:rgba(16,185,129,0.06);border-radius:12px;border:1px solid rgba(16,185,129,0.15)">
+              <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:4px">Estimated Annual Premium</p>
+              <div id="termResultVal" style="font-size:2.8rem;font-weight:800;color:var(--primary)">₹0</div>
+              <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px">Indicative. Actual premium varies by insurer and medical underwriting.</p>
+            </div>
+          </div>
+
+          <!-- EDUCATION INFLATION -->
+          <div class="glass-panel">
+            <h4 style="margin-bottom:6px">Education Inflation Estimator</h4>
+            <p class="step-desc">Project future education costs for coverage planning.</p>
+            <div class="field-row"><div class="field"><label>Current Cost (₹)</label><input type="number" id="eduCost" placeholder="1000000"></div><div class="field"><label>Years Until Needed</label><input type="number" id="eduYears" placeholder="10"></div></div>
+            <div class="field"><label>Expected Education Inflation (%)</label><input type="number" id="eduInflation" placeholder="10"></div>
+            <button class="btn btn-primary" onclick="calculateEduInflation()" style="width:100%;margin-top:16px">Project Future Cost →</button>
+            <div id="eduResult" style="display:none;margin-top:24px;text-align:center;padding:24px;background:rgba(99,102,241,0.06);border-radius:12px;border:1px solid rgba(99,102,241,0.15)">
+              <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:4px">Projected Future Cost</p>
+              <div id="eduResultVal" style="font-size:2.8rem;font-weight:800;color:var(--accent)">₹0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!-- ═══════ SECTION: INSIGHTS & TOOLS (WIDGETS) ═══════ -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <section id="insights" class="section">
+        <div class="section-header">
+          <h2>Live Insights & Tools</h2>
+          <p>Real-time market intelligence, calculators, and regulatory benchmarks.</p>
+        </div>
+        <div class="widget-grid">
+
+          <!-- IRDAI NEWS -->
+          <div class="glass-panel widget">
+            <div class="widget-title">Latest IRDAI News</div>
+            <div class="news-item"><span class="news-tag">Regulation</span><p style="font-size:13px;font-weight:600">IRDAI mandates higher surrender value for life policies starting April 2024</p><small style="color:rgba(255,255,255,0.2)">Just now</small></div>
+            <div class="news-item"><span class="news-tag">Market</span><p style="font-size:13px;font-weight:600">Health premiums expected to rise 10-15% next quarter</p><small style="color:rgba(255,255,255,0.2)">2 hrs ago</small></div>
+            <div class="news-item"><span class="news-tag">Update</span><p style="font-size:13px;font-weight:600">Bima Sugam portal rolling out digital onboarding</p><small style="color:rgba(255,255,255,0.2)">Yesterday</small></div>
+          </div>
+
+          <!-- MARKET SNAPSHOT -->
+          <div class="glass-panel widget">
+            <div class="widget-title">Market Snapshot</div>
+            <div class="stat-row"><span style="font-size:13px;color:rgba(255,255,255,0.4)">Avg Health Cover (Urban)</span><span style="font-weight:800;color:var(--primary);font-size:14px">₹6.4 L</span></div>
+            <div class="stat-row"><span style="font-size:13px;color:rgba(255,255,255,0.4)">Term Life Adoption</span><span style="font-weight:800;color:var(--primary);font-size:14px">+15% YoY</span></div>
+            <div class="stat-row"><span style="font-size:13px;color:rgba(255,255,255,0.4)">Claim Settlement Avg</span><span style="font-weight:800;color:var(--primary);font-size:14px">96.3%</span></div>
+          </div>
+
+          <!-- FIRE NUMBER CALCULATOR -->
+          <div class="glass-panel widget" id="fireWidget">
+            <div class="widget-title" style="color:#F59E0B">🔥 FIRE Number</div>
+            <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:14px">Calculate your Financial Independence target corpus.</p>
+            <div class="fire-inputs">
+              <input type="number" id="fireExpense" placeholder="Monthly Expense ₹">
+              <input type="number" id="fireRate" placeholder="SWR % (4)">
+            </div>
+            <button class="btn btn-primary" onclick="calculateFIRE()" style="width:100%;padding:12px;font-size:13px">Calculate →</button>
+            <div class="fire-result" id="fireResult">
+              <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:4px">Target Corpus</p>
+              <div class="fire-val" id="fireVal">₹0</div>
+              <p style="font-size:10px;color:rgba(255,255,255,0.25);margin-top:4px">At 4% Safe Withdrawal Rate</p>
+            </div>
+          </div>
+
+          <!-- TAX BENEFITS — SECTION 80D -->
+          <div class="glass-panel widget">
+            <div class="widget-title" style="color:var(--accent)">§80D Tax Benefits</div>
+            <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:14px">Deductions on health insurance premiums (Old Tax Regime)</p>
+            <table class="tax-table">
+              <thead><tr><th>Category</th><th>Self/Family</th><th style="text-align:right">Max Deduction</th></tr></thead>
+              <tbody>
+                <tr><td>Both &lt; 60 years</td><td>₹25,000</td><td>₹50,000</td></tr>
+                <tr><td>Parents 60+</td><td>₹25,000</td><td>₹75,000</td></tr>
+                <tr><td>All members 60+</td><td>₹50,000</td><td>₹1,00,000</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:12px">Includes ₹5,000 for preventive health check-ups. Non-cash payments only. Source: Income Tax Act.</p>
+          </div>
+
+          <!-- CORPORATE INDIA RISK INDEX -->
+          <div class="glass-panel widget">
+            <div class="widget-title">Corporate India Risk Index</div>
+            <div class="ciri-gauge">
+              <div class="ciri-score" style="color:var(--primary)">65</div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:4px">Optimized Risk Handling</p>
+            </div>
+            <div class="ciri-bar"><div class="ciri-bar-fill" id="ciriBar" style="width:0%;background:linear-gradient(90deg,var(--danger),#F59E0B,var(--primary))"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.2);margin-top:6px"><span>0</span><span>50</span><span>100</span></div>
+            <div style="margin-top:16px;font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Risk Mgmt Index</span><span style="color:var(--primary);font-weight:700">68</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Risk Exposure</span><span style="color:var(--primary);font-weight:700">65</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Sectors at Superior</span><span style="color:var(--primary);font-weight:700">9/20</span></div>
+            </div>
+            <p style="font-size:10px;color:rgba(255,255,255,0.15);margin-top:12px">ICICI Lombard × Frost & Sullivan 2024. 220 companies, 20 sectors.</p>
+          </div>
+
+          <!-- PRO TIP -->
+          <div class="glass-panel widget" style="border-color:rgba(99,102,241,0.2)">
+            <div class="widget-title" style="color:var(--accent)">Pro Tip</div>
+            <p style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.5)">Always disclose pre-existing conditions truthfully. Non-disclosure is the #1 cause of claim rejection above ₹15 Lakhs.</p>
+            <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border);font-size:11px;color:rgba(255,255,255,0.2)">
+              <p>💡 Tip: Buy term insurance early. Premiums at age 25 are ~40% cheaper than at 35 for the same cover.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+  </div><!-- /page-container -->
+</main>
+
+<footer>
+  <div style="max-width:1200px;margin:0 auto;padding:60px 32px;text-align:center;border-top:1px solid var(--border)">
+    <p style="color:rgba(255,255,255,0.15);font-size:13px">&copy; 2024 RestInsured. Precision Actuarial Science. All data sourced from IRDAI public registries.</p>
   </div>
+</footer>
 
-  <!-- LOADING -->
-  <div id="loadingSection" style="display:none">
-    <div class="loading-wrap">
-      <div class="spinner"></div>
-      <h3 style="font-size:1.2rem;color:var(--text);font-weight:700">Executing models...</h3>
-      <div class="loading-steps" id="loadingSteps">
-        <div class="loading-step active" id="ls0">Initializing feature vectors...</div>
-        <div class="loading-step" id="ls1">Cross-referencing database...</div>
-        <div class="loading-step" id="ls2">Running premium regressions...</div>
-        <div class="loading-step" id="ls3">Formatting predictions...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESULTS -->
-  <div id="resultsSection" style="display:none">
-    <div class="results-grid">
-      <div id="errorBanner" class="error-banner" style="display:none"></div>
-
-      <div class="risk-banner" id="riskBanner">
-        <div class="risk-info">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Prediction Output</div>
-          <h2 id="resultTitle">Analysis Complete</h2>
-          <p id="resultSubtitle" style="color:var(--muted);font-size:14px;margin-top:4px"></p>
-        </div>
-        <div class="risk-meter">
-          <div class="risk-circle" id="riskCircle">
-            <div class="risk-inner" id="riskScore">—</div>
-          </div>
-          <div class="risk-labels">
-            <strong id="riskLabel">—</strong>
-            Risk Model Profile
-          </div>
-        </div>
-      </div>
-
-      <div class="metrics-row" id="metricsRow"></div>
-
-      <div class="ai-insights" id="aiInsights">
-        <div class="ai-label">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:2px"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          Actuarial Insight
-        </div>
-        <div class="ai-text" id="aiInsightText">Analyzing…</div>
-      </div>
-
-      <div class="section-title">Algorithmic Recommendations</div>
-      <div class="plans-grid" id="plansGrid"></div>
-
-      <div style="display:flex;gap:12px;margin-top:1.5rem">
-        <button class="btn btn-primary" onclick="switchTab('comparison',document.querySelectorAll('.nav-tab')[1])">View Full Matrix</button>
-        <button class="btn btn-ghost" onclick="resetForm()">New Analysis</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════ TAB 2: COMPARISON ══════════ -->
-<div id="tab-comparison" class="tab-content">
-  <div class="comparison-wrap">
-    <div class="hero">
-      <div class="hero-content">
-        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Plan Comparison Matrix</h2>
-        <p style="color:var(--muted);font-size:16px;max-width:600px">Cross-sectional analysis of 40+ IRDAI-registered plans indexed with network density and claim ratios for 2024-25.</p>
-      </div>
-      <div class="hero-asset-container" style="width:240px;height:240px;">
-        <img src="assets/compare.png" class="hero-asset" alt="3D Comparison Data Asset">
-      </div>
-    </div>
-    
-    <div class="comp-filters">
-      <span style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">Matrix Filter:</span>
-      <span class="filter-chip active" onclick="filterPlans('all',this)">All Plans</span>
-      <span class="filter-chip" onclick="filterPlans('health',this)">Health Base</span>
-      <span class="filter-chip" onclick="filterPlans('term',this)">Term Life</span>
-      <span class="filter-chip" onclick="filterPlans('critical',this)">Critical Illness</span>
-      <span class="filter-chip" onclick="filterPlans('senior',this)">Senior Risk</span>
-      <span class="filter-chip" onclick="filterPlans('floater',this)">Family Floater</span>
-    </div>
-    
-    <div class="comp-table-wrap">
-      <table id="compTable">
-        <thead>
-          <tr>
-            <th>Provider / Product</th>
-            <th>Topology</th>
-            <th>Max Sum</th>
-            <th>Median Premium</th>
-            <th>Claim Settled</th>
-            <th>Network Load</th>
-            <th>Pre-exist Wait</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody id="compBody"></tbody>
-      </table>
-    </div>
-    <p style="font-size:12px;color:var(--muted2);margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px">* Base matrix indexed on male, non-smoker, sub-30 cohort standard parameters. Source: IRDAI 23-24 Registry.</p>
-  </div>
-</div>
-
-<!-- ══════════ TAB 3: POLICY SCRAPER / ANALYZER ══════════ -->
-<div id="tab-policy" class="tab-content">
-  <div class="analyzer-wrap">
-    <div class="hero">
-      <div class="hero-content">
-        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Policy Deconstructor</h2>
-        <p style="color:var(--muted);font-size:16px;max-width:600px">Paste policy verbiage or URL constraints. Our NLP engine will dismantle clauses to detect exclusions, waiting periods, and score intrinsic value.</p>
-      </div>
-      <div class="hero-asset-container" style="width:240px;height:240px;">
-        <img src="assets/document.png" class="hero-asset" alt="3D Policy Analysis Asset">
-      </div>
-    </div>
-
-    <div class="mode-toggle">
-      <button class="btn btn-primary" id="modeText" onclick="setPolicyMode('text')">Raw Text Input</button>
-      <button class="btn btn-ghost" id="modeURL" onclick="setPolicyMode('url')">URL Index</button>
-    </div>
-    <div id="policyTextMode">
-      <textarea class="textarea-big" id="policyTextInput" placeholder="Inject policy manifest payload here...&#10;&#10;E.g., HDFC Ergo Optima Secure. Premium: ₹8,240. Waiting period: 30 days general. Pre-existing 24mo..."></textarea>
-    </div>
-    <div id="policyURLMode" style="display:none">
-      <div class="url-row">
-        <input class="url-input" id="policyURLInput" placeholder="Enter remote origin URL (e.g. https://provider.com/policy)">
-      </div>
-      <p style="font-size:13px;color:var(--muted);margin-top:0.8rem">Remote fetch requires active backend relay to bypass CORS.</p>
-    </div>
-    <div id="policyError" class="error-banner" style="display:none;margin-top:1rem"></div>
-    <div style="margin-top:1.5rem">
-      <button class="btn btn-primary btn-lg" onclick="analyzePolicy()" id="policyBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
-        Execute Analysis
-      </button>
-    </div>
-
-      <div id="policyLoading" style="display:none;margin-top:2rem">
-        <div style="display:flex;align-items:center;gap:16px;color:var(--text);font-weight:600">
-          <div class="spinner"></div>
-          <span>Deconstructing clause parameters...</span>
-        </div>
-      </div>
-
-      <div id="policyResult" style="display:none"></div>
-    </div>
-  </div>
-
-<!-- ══════════ TAB 4: ML DASHBOARD ══════════ -->
-<div id="tab-calculators" class="tab-content">
-  <div class="analyzer-wrap">
-    <div class="hero">
-      <div class="hero-content">
-        <h2 style="font-size:2.5rem;margin-bottom:0.8rem;color:var(--primary)">Interactive ML Dashboard</h2>
-        <p style="color:var(--muted);font-size:16px;max-width:600px">Experience instant, native actuarial predictions, ultra-fast 3D claim tracking and drag-and-drop bundle customization powered by GSAP.</p>
-      </div>
-      <div class="hero-asset-container" style="width:240px;height:240px;">
-        <img src="assets/ml.png" class="hero-asset" alt="3D Neural Network ML Asset">
-      </div>
-    </div>
-
-    <div class="grid-layout" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));gap:2rem;">
-      
-      <!-- HLV Calculator (Existing) -->
-      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);">
-        <h2 class="form-title" style="font-size:1.4rem">Human Life Value Model</h2>
-        <p class="form-subtitle" style="margin-bottom:1.5rem">Calculates the present value of your future net income over your working years.</p>
-        
-        <div class="field-row">
-          <div class="field">
-            <label>Current Age (Years)</label>
-            <input type="number" id="hlvAge" value="30" min="18" max="65">
-          </div>
-          <div class="field">
-            <label>Retirement Age (Years)</label>
-            <input type="number" id="hlvRetireAge" value="60" min="40" max="75">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Current Annual Income (₹)</label>
-            <input type="number" id="hlvIncome" value="1200000" step="50000">
-          </div>
-          <div class="field">
-            <label>Personal Expenses (% of income)</label>
-            <input type="number" id="hlvExpensePct" value="30" min="0" max="80" title="Amount you spend on yourself">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Expected Income Growth (Annual %)</label>
-            <input type="number" id="hlvIncomeGrowth" value="5" min="0" max="15">
-          </div>
-          <div class="field">
-            <label>Discount/Investment Rate (Annual %)</label>
-            <input type="number" id="hlvDiscountRate" value="8" min="3" max="15">
-          </div>
-        </div>
-        <div class="form-nav" style="margin-top:1rem;padding-top:1.5rem;">
-          <button type="button" class="btn btn-primary" onclick="calculateHLV()">Calculate Minimum Cover →</button>
-        </div>
-
-        <div id="hlvResultPane" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
-          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Recommended Life Cover</div>
-          <div id="hlvResultValue" style="font-size:2.5rem;font-weight:800;color:var(--success);line-height:1">₹0</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:8px">Based on your working years remaining and net contribution to your family. You should opt for a Term Insurance closest to this amount.</div>
-        </div>
-      </div>
-
-      <!-- Quote Calculator -->
-      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);display:flex;flex-direction:column;">
-        <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>
-          Dynamic Quote Engine
-        </h2>
-        <div style="margin-top:1rem">
-          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px"><label>Coverage Amount</label><span id="covVal" style="color:var(--primary);font-weight:600">₹50,00,000</span></div>
-          <input type="range" id="gsapCoverage" min="1000000" max="10000000" step="100000" value="5000000" style="width:100%;margin-top:8px">
-          <div style="width:100%;height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden">
-            <div id="gsapCovBar" style="height:100%;width:50%;background:linear-gradient(90deg,var(--accent),#60A5FA)"></div>
-          </div>
-        </div>
-        <div style="margin-top:2rem">
-          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px"><label>Voluntary Deductible</label><span id="dedVal" style="color:var(--primary);font-weight:600">₹50,000</span></div>
-          <input type="range" id="gsapDeductible" min="0" max="100000" step="5000" value="50000" style="width:100%;margin-top:8px">
-        </div>
-        <div style="margin-top:auto;padding-top:2rem">
-          <div style="padding:1.5rem;background:var(--surface-hover);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center">
-             <div style="font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:700">Estimated Annual Premium</div>
-             <div id="gsapPremium" style="font-size:3rem;font-weight:800;color:var(--success);margin-top:8px">₹6,500</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3D Policy Customizer -->
-      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);overflow:hidden">
-        <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          3D Bundle Customizer
-        </h2>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:2rem">Drag icons below into the bundle zone to unlock instant savings. Powered by GSAP Physics.</p>
-        <div id="bundleContainer" style="display:flex;justify-content:space-around;padding:1rem 0;perspective:1000px">
-           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
-           </div>
-           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2" ry="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M3 11l2-7h14l2 7"/></svg>
-           </div>
-           <div class="drag-icon" style="width:60px;height:60px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:grab;z-index:10;box-shadow:0 10px 20px rgba(0,0,0,0.5)">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-           </div>
-        </div>
-        <div id="bundleZone" style="width:100%;height:100px;border:2px dashed var(--border);border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:14px;margin-top:1rem;transition:all 0.3s">
-           Drop icons here to bundle
-           <div id="bundleMsg" style="display:none;color:var(--success);font-weight:700;font-size:12px;margin-top:4px">15% Multi-line discount unlocked!</div>
-        </div>
-      </div>
-
-      <!-- Claims Stepper -->
-      <div class="form-card" style="margin:0;box-shadow:none;border-color:var(--border);">
-         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-          Claims Progress Tracking
-        </h2>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:3rem">Click the tracker area to simulate real-time claim progression.</p>
-        <div id="gsapStepper" style="position:relative;padding:0 10px;cursor:pointer" onclick="advanceStepper()">
-          <div style="position:absolute;top:13px;left:10px;right:10px;height:4px;background:var(--surface-hover);border-radius:2px;z-index:0"></div>
-          <div id="stepperFill" style="position:absolute;top:13px;left:10px;height:4px;width:0%;background:var(--success);border-radius:2px;z-index:1"></div>
-          <div style="display:flex;justify-content:space-between;position:relative;z-index:2">
-             <div class="step-node active step-fillable" data-idx="0" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px">
-                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--success);border:2px solid var(--success);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--primary)">Filed</span>
-             </div>
-             <div class="step-node inactive step-fillable" data-idx="1" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
-                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Reviewed</span>
-             </div>
-             <div class="step-node inactive step-fillable" data-idx="2" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
-                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Approved</span>
-             </div>
-             <div class="step-node inactive step-fillable" data-idx="3" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:60px;opacity:0.4">
-                <div class="step-circle" style="width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" style="opacity:0"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <span class="step-lbl" style="font-size:12px;font-weight:600;color:var(--muted)">Paid</span>
-             </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Policy Shield Card -->
-      <div id="gsapPolicyCard" class="form-card" style="margin:0;box-shadow:0 4px 6px rgba(0,0,0,0.1);border-color:var(--border);display:flex;flex-direction:column;cursor:pointer">
-         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Featured Policy
-        </h2>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;padding:1rem">
-           <div id="gsapShield" style="width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#93C5FD);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-           </div>
-           <h3 style="margin:0 0 8px;font-size:1.2rem;color:var(--primary)">Optima Restore Shield</h3>
-           <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.5">Comprehensive coverage that magically restores your sum insured upon exhaustion. Hover for 3D physics detail.</p>
-        </div>
-      </div>
-      
-      <!-- Testimonials -->
-      <div class="form-card" style="grid-column:1/-1;margin:0;box-shadow:none;border-color:var(--border);overflow:hidden">
-         <h2 class="form-title" style="font-size:1.4rem;display:flex;align-items:center;gap:8px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Live User Testimonials
-        </h2>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:1.5rem">Grab and drag the cards horizontally to view physics-constrained carousels.</p>
-        <div id="testimWrapper" style="display:flex;gap:1.5rem;cursor:grab;padding-bottom:1rem;width:fit-content" class="drag-x">
-           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
-              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
-              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"The UI here is butter smooth. I saved ₹15,000 on my premium within flat 5 minutes."</p>
-              <strong style="font-size:13px;color:var(--primary)">Rahul S.</strong>
-           </div>
-           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
-              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
-              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Hands down the best insurance portal in India. Claim was settled seamlessly."</p>
-              <strong style="font-size:13px;color:var(--primary)">Priya M.</strong>
-           </div>
-           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
-              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
-              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Visuals make boring insurance actually engaging. The 3D customizer is mind blowing."</p>
-              <strong style="font-size:13px;color:var(--primary)">Karan T.</strong>
-           </div>
-           <div class="testim-card" style="min-width:320px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem">
-              <div style="color:#F59E0B;margin-bottom:12px;font-size:12px;letter-spacing:1px">★★★★★</div>
-              <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1rem">"Unmatched pricing and transparency. The analytics dashboard gave me so much clarity."</p>
-              <strong style="font-size:13px;color:var(--primary)">Neha K.</strong>
-           </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
-
-  </div> <!-- End main-column -->
-  
-  <aside class="sidebar-column">
-    <div class="widget">
-      <div class="widget-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><polyline points="14 2 14 8 20 8"/><path d="M2 15h10"/><path d="M9 18l3-3-3-3"/></svg>
-        Latest IRDAI News
-      </div>
-      <div class="news-item">
-        <span class="news-tag">Regulation</span>
-        <div class="news-title">IRDAI mandates higher surrender value for life policies starting April 2024</div>
-        <div class="news-date">Just now</div>
-      </div>
-      <div class="news-item">
-        <span class="news-tag">Market Trend</span>
-        <div class="news-title">Health insurance premiums expected to rise by 10-15% next quarter</div>
-        <div class="news-date">2 hours ago</div>
-      </div>
-      <div class="news-item">
-        <span class="news-tag">Update</span>
-        <div class="news-title">New Bima Sugam portal set to roll out entirely digital onboarding</div>
-        <div class="news-date">Yesterday</div>
-      </div>
-    </div>
-    
-    <div class="widget">
-      <div class="widget-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Market Snapshot
-      </div>
-      <div class="market-stat">
-        <span class="stat-label">Avg Health Cover (Urban)</span>
-        <span class="stat-val">₹6.4 L</span>
-      </div>
-      <div class="market-stat">
-        <span class="stat-label">Term Life Adoption</span>
-        <span class="stat-val" style="color:var(--success)">+15% YoY</span>
-      </div>
-      <div class="market-stat">
-        <span class="stat-label">Claim Settlement Avg</span>
-        <span class="stat-val">96.3%</span>
-      </div>
-    </div>
-    
-    <div class="widget" style="background:var(--primary);color:var(--primary-fg);border:none;">
-      <div class="widget-title" style="color:var(--primary-fg)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        Pro Tip
-      </div>
-      <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.85)">Always disclose pre-existing conditions truthfully. Non-disclosure is the leading cause of claim rejection above ₹15 Lakhs.</p>
-    </div>
-  </aside>
-
-</div> <!-- End page-container -->
-
-<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="js/api.js"></script>
 <script src="js/app.js"></script>
 </body>
